@@ -15,8 +15,7 @@ import java.util.List;
 
 @Component
 public class JdbcAccountDao implements AccountDao {
-    //TODO: Ignoring all dates for now
-    private final String ACCOUNT_SELECT_STRING = "SELECT account_id, first_name, last_name, email, profile_picture, bio, username, password FROM account ";
+    private final String ACCOUNT_SELECT_STRING = "SELECT account_id, first_name, last_name, email, profile_picture, bio, username, password, date_added FROM account ";
     private final JdbcTemplate jdbcTemplate;
 
     public JdbcAccountDao(JdbcTemplate jdbcTemplate) {
@@ -108,7 +107,6 @@ public class JdbcAccountDao implements AccountDao {
         return newAccount;
     }
 
-    //TODO: Not returning date as JSON, but works
     private Account mapRowToUser(SqlRowSet rs) {
         Account account = new Account();
         account.setId(rs.getInt("account_id"));
@@ -117,6 +115,7 @@ public class JdbcAccountDao implements AccountDao {
         account.setEmail(rs.getString("email"));
         account.setUsername(rs.getString("username"));
         account.setPassword(rs.getString("password"));
+        account.setDateAdded(rs.getDate("date_added"));
         account.setActivated(true);
         account.setAuthorities("USER");
         return account;

@@ -84,6 +84,5 @@ public class ReviewController {
     public void deleteReview(@PathVariable int id) {
         reviewDao.deleteReview(id);
     }
-    //TODO: Test via postman!
 
 }

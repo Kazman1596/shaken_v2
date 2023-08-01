@@ -37,10 +37,28 @@ public class JdbcIngredientDao implements IngredientDao {
         return returnedIngredients;
     }
 
-    //TODO: Fix this once we get DB populated
     @Override
     public List<Ingredient> getIngredientsByRecipe(int recipeId) {
-        return null;
+        List<Ingredient> ingredients = new ArrayList<>();
+        String sql = "SELECT i.ingredient_id, i.quantity, i.unit, i.name FROM ingredient i \n" +
+                "JOIN recipe_ingredient ri \n" +
+                "\t ON i.ingredient_id = ri.ingredient_id \n" +
+                "JOIN recipe r \n" +
+                "\t ON ri.recipe_id = r.recipe_id \n" +
+                "WHERE r.recipe_id = ?;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, recipeId);
+            while (results.next()) {
+                Ingredient ingredient = mapRowToIngredient(results);
+                ingredients.add(ingredient);
+            }
+        } catch (CannotGetJdbcConnectionException ex) {
+            throw new DaoException("Unable to connect to server or database", ex);
+        } catch (DataIntegrityViolationException ex) {
+            throw new DaoException("Data Integrity Violation", ex);
+        }
+
+        return ingredients;
     }
 
     @Override
@@ -96,14 +114,14 @@ public class JdbcIngredientDao implements IngredientDao {
         return ingredient;
     }
 
-    //TODO: This will not work until we also create a sql string to delete associated ingredient_recipe row
     @Override
-    public int deleteIngredient(int ingredientId) {
+    public int removeIngredientFromRecipe(int ingredientId, int recipeId) {
         int deletedRows = 0;
-        String sql = "DELETE FROM ingredient WHERE ingredient_id = ?;";
+
+        String sql = "DELETE FROM ingredient_recipe WHERE ingredient_id = ? AND recipe_id = ?;";
 
         try{
-            deletedRows = jdbcTemplate.update(sql, ingredientId);
+            deletedRows = jdbcTemplate.update(sql, ingredientId, recipeId);
         } catch (CannotGetJdbcConnectionException ex) {
             throw new DaoException("Unable to connect to the server or database", ex);
         } catch (DataIntegrityViolationException ex) {
@@ -151,7 +169,7 @@ public class JdbcIngredientDao implements IngredientDao {
     private Ingredient mapRowToIngredient(SqlRowSet results) {
         Ingredient ingredient = new Ingredient();
         ingredient.setIngredientId(results.getInt("ingredient_id"));
-        ingredient.setQuantity(results.getString("quantity")); //TODO: Might cause an issue
+        ingredient.setQuantity(results.getString("quantity"));
         ingredient.setMeasurement(results.getString("unit"));
         ingredient.setName(results.getString("name"));
 

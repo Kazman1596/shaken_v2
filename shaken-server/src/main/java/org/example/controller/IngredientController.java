@@ -34,8 +34,8 @@ public class IngredientController {
     }
 
     @RequestMapping(path="/recipe/{id}", method = RequestMethod.GET)
-    public List<Ingredient> getIngredientByRecipeId(@PathVariable int id) {
-        List<Ingredient> ingredients = ingredientDao.getIngredientsByRecipeId(id);
+    public List<Ingredient> getIngredientByRecipe(@PathVariable int id) {
+        List<Ingredient> ingredients = ingredientDao.getIngredientsByRecipe(id);
         if (ingredients.size() == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ingredients were not found");
         } else {

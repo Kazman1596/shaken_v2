@@ -6,7 +6,6 @@ import org.example.model.Account;
 import java.util.List;
 
 public interface AccountDao {
-    //TODO: After server-side is done, we can jump to client and get this all hooked up
 
     List<Account> getAccounts();
 

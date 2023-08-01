@@ -1,7 +1,9 @@
 package org.example.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
@@ -15,6 +17,7 @@ public class Account {
    private String email;
    private String profilePicture = " ";
    private String bio = " ";
+   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
    private LocalDate dateAdded;
    private String username;
    @JsonIgnore // prevent from being sent to client
@@ -25,7 +28,6 @@ public class Account {
 
    public Account() { }
 
-   //TODO: Ignoring dates for now...?
    public Account(int id, String firstName, String lastName, String email, String username, String password, String authorities) {
       this.id = id;
       this.firstName = firstName;
@@ -106,8 +108,8 @@ public class Account {
       return dateAdded;
    }
 
-   public void setDateAdded(LocalDate dateAdded) {
-      this.dateAdded = dateAdded;
+   public void setDateAdded(Date dateAdded) {
+      this.dateAdded = dateAdded.toLocalDate();
    }
 
    public boolean isActivated() {

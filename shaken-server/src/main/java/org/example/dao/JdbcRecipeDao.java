@@ -19,7 +19,6 @@ public class JdbcRecipeDao implements RecipeDao{
     private static final String RECIPE_JOIN_STRING = "SELECT r.title, r.ingredients, r.instructions, r.glass, r.account_id, r.rating, r.post_date, r.post_time, r.recipe_id FROM recipe r ";
     private final JdbcTemplate jdbcTemplate;
 
-    //For Testing//
     public JdbcRecipeDao(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
