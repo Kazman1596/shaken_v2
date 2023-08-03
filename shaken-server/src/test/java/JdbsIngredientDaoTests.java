@@ -53,13 +53,18 @@ public class JdbsIngredientDaoTests extends BaseDaoTests {
 
     @Test
     public void createIngredient_returns_new_ingredient() {
-        Ingredient newIngredient = sut.createIngredient(testIngredient);
+        //Creating test ingredient and adding it to Margarita
+        Ingredient newIngredient = sut.createIngredient(testIngredient, 1);
 
         int newId = newIngredient.getIngredientId();
         Assert.assertTrue(newId > 0);
 
         Ingredient retrievedIngredient = sut.getIngredientById(newId);
         assertIngredientsMatch(newIngredient, retrievedIngredient);
+
+        List<Ingredient> newIngredients = sut.getIngredientsByRecipe(1);
+
+        Assert.assertEquals(newIngredients.size(), 4);
     }
 
     @Test

@@ -44,9 +44,9 @@ public class IngredientController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path="", method = RequestMethod.POST)
-    public Ingredient createIngredient(@Valid @RequestBody Ingredient ingredient) {
-        return ingredientDao.createIngredient(ingredient);
+    @RequestMapping(path="/recipe/{id}", method = RequestMethod.POST)
+    public Ingredient createIngredient(@Valid @RequestBody Ingredient ingredient, @PathVariable int id) {
+        return ingredientDao.createIngredient(ingredient, id);
     }
 
     @RequestMapping(path="/{id}", method = RequestMethod.PUT)

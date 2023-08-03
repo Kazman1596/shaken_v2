@@ -24,7 +24,7 @@ public class JdbcAccountDaoTests extends BaseDaoTests {
     public void getAccounts_returns_correct() {
         List<Account> results = sut.getAccounts();
 
-        Assert.assertEquals(results.size(), 3);
+        Assert.assertEquals(results.size(), 4);
     }
 
     @Test

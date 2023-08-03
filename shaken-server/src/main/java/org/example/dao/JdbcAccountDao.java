@@ -16,7 +16,6 @@ import java.util.List;
 
 @Component
 public class JdbcAccountDao implements AccountDao {
-    //TODO: Integration Tests for AccountDao
     private final String ACCOUNT_SELECT_STRING = "SELECT account_id, first_name, last_name, email, profile_picture, bio, username, password, date_added FROM account ";
     private final JdbcTemplate jdbcTemplate;
 
@@ -110,6 +109,7 @@ public class JdbcAccountDao implements AccountDao {
     }
 
     //TODO: Secure way to change password before hashing
+    // I'm not going to have an edit profile on console, so come back to see how this reacts with a webUI
     @Override
     public Account updateAccount(Account account) {
         Account updatedAccount = null;
@@ -133,7 +133,8 @@ public class JdbcAccountDao implements AccountDao {
     @Override
     public boolean deleteAccount(int id) {
         boolean deleted = false;
-        String sqlReview = "DELETE FROM review WHERE account_id = ?;";
+        //Setting to Deleted User
+        String sqlReview = "UPDATE review SET account_id = 22 WHERE account_id = ?;";
 
         String sqlAccount = "DELETE FROM account WHERE account_id = ?;";
 

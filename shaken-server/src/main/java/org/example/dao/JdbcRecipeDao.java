@@ -15,7 +15,7 @@ import java.util.List;
 @Component
 public class JdbcRecipeDao implements RecipeDao{
 
-    private static final String RECIPE_SELECT_STRING = "SELECT title, ingredients, instructions, glass, account_id, rating, post_date, post_time, recipe_id FROM recipe ";
+    private static final String RECIPE_SELECT_STRING = "SELECT title, ingredients, instructions, glass, account_id, rating, post_date, post_time, recipe_id FROM recipe WHERE active = true ";
     private static final String RECIPE_JOIN_STRING = "SELECT r.title, r.ingredients, r.instructions, r.glass, r.account_id, r.rating, r.post_date, r.post_time, r.recipe_id FROM recipe r ";
     private final JdbcTemplate jdbcTemplate;
 
@@ -41,7 +41,7 @@ public class JdbcRecipeDao implements RecipeDao{
     @Override
     public List<Recipe> getRecipesByTitle(String userInput, boolean wild) {
         List<Recipe> returnedRecipes = new ArrayList<>();
-        String sql = RECIPE_SELECT_STRING + "WHERE title ILIKE ?;";
+        String sql = RECIPE_SELECT_STRING + "AND title ILIKE ?;";
         if (wild) {
             userInput = "%" + userInput + "%";
         }
@@ -60,7 +60,7 @@ public class JdbcRecipeDao implements RecipeDao{
     @Override
     public Recipe getRecipeById(int id) {
         Recipe recipe = null;
-        String sql = RECIPE_SELECT_STRING + "WHERE recipe_id = ?;";
+        String sql = RECIPE_SELECT_STRING + "AND recipe_id = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
             if (results.next()) {
@@ -77,7 +77,7 @@ public class JdbcRecipeDao implements RecipeDao{
     public List<Recipe> getRecipesByAccountId(int accountId) {
         List<Recipe> returnedRecipes = new ArrayList<>();
 
-        String sql = RECIPE_SELECT_STRING + "WHERE account_id = ?;";
+        String sql = RECIPE_SELECT_STRING + "AND account_id = ?;";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, accountId);
@@ -131,7 +131,7 @@ public class JdbcRecipeDao implements RecipeDao{
     @Override
     public int deleteRecipe(int id) {
         int deletedRows = 0;
-        String sql = "DELETE FROM recipe WHERE recipe_id = ?;";
+        String sql = "UPDATE recipe SET active= false WHERE recipe_id = ?;";
 
         try{
             deletedRows = jdbcTemplate.update(sql, id);
@@ -152,7 +152,7 @@ public class JdbcRecipeDao implements RecipeDao{
                 "\tON ri.recipe_id = r.recipe_id\n" +
                 "JOIN ingredient i\n" +
                 "\tON ri.ingredient_id = i.ingredient_id\n" +
-                "WHERE i.ingredient_id = ?;";
+                "WHERE i.ingredient_id = ? AND r.active = true;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, ingredientId);
             while (results.next()) {

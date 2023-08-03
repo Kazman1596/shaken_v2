@@ -15,7 +15,6 @@ import java.util.List;
 
 @Component
 public class JdbcIngredientDao implements IngredientDao {
-    //TODO: Integration Tests for IngredientDao
     private final String INGREDIENT_SELECT_STRING = "SELECT ingredient_id, quantity, unit, name FROM ingredient ";
     private final JdbcTemplate jdbcTemplate;
     public JdbcIngredientDao(DataSource dataSource) {
@@ -80,15 +79,16 @@ public class JdbcIngredientDao implements IngredientDao {
         return ingredient;
     }
 
-    //TODO: creating an ingredient should only be associated with creating/editing a recipe, so we need a separate recipeID
     @Override
-    public Ingredient createIngredient(Ingredient newIngredient) {
+    public Ingredient createIngredient(Ingredient newIngredient, int recipeId) {
         Ingredient ingredient = null;
         String sql = "INSERT INTO ingredient(quantity, unit, name) " +
                 "VALUES (?, ?, ?) RETURNING ingredient_id;";
         try {
             int newId = jdbcTemplate.queryForObject(sql, int.class, newIngredient.getQuantity(), newIngredient.getMeasurement(), newIngredient.getName());
             ingredient = getIngredientById(newId);
+            IngredientRecipeDto ingredientRecipeDto = new IngredientRecipeDto(recipeId, newId);
+            mapIngredientToRecipe(ingredientRecipeDto);
         } catch (CannotGetJdbcConnectionException ex) {
             throw new DaoException("Unable to connect to the server or database", ex);
         } catch (DataIntegrityViolationException ex) {

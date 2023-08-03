@@ -13,9 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 @Component
 public class JdbcReviewDao implements ReviewDao{
-    //TODO: Integration Tests for ReviewDao
-
-    private static final String REVIEW_SELECT_STRING = "SELECT review_id, title, recipe_id, account_id, description, rating, post_date, post_time FROM review ";
+    private static final String REVIEW_SELECT_STRING = "SELECT review_id, title, recipe_id, account_id, description, rating, post_date, post_time FROM review WHERE active = true ";
     private final JdbcTemplate jdbcTemplate;
 
     public JdbcReviewDao(DataSource dataSource) {
@@ -41,7 +39,7 @@ public class JdbcReviewDao implements ReviewDao{
     @Override
     public Review getReviewById(int id) {
         Review review = null;
-        String sql = REVIEW_SELECT_STRING + "WHERE review_id = ?;";
+        String sql = REVIEW_SELECT_STRING + "AND review_id = ?;";
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
             if (results.next()) {
@@ -59,7 +57,7 @@ public class JdbcReviewDao implements ReviewDao{
     @Override
     public List<Review> getReviewsByRecipe(int recipeId) {
         List<Review> returnedReviews = new ArrayList<>();
-        String sql = REVIEW_SELECT_STRING + "WHERE recipe_id = ?;";
+        String sql = REVIEW_SELECT_STRING + "AND recipe_id = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, recipeId);
             while (results.next()) {
@@ -78,7 +76,7 @@ public class JdbcReviewDao implements ReviewDao{
     @Override
     public List<Review> getReviewsByUser(int userId) {
         List<Review> returnedReviews = new ArrayList<>();
-        String sql = REVIEW_SELECT_STRING + "WHERE account_id = ?;";
+        String sql = REVIEW_SELECT_STRING + "AND account_id = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
             while (results.next()) {
@@ -97,7 +95,7 @@ public class JdbcReviewDao implements ReviewDao{
     @Override
     public List<Review> getReviewsByRating(int rating) {
         List<Review> returnedReviews = new ArrayList<>();
-        String sql = REVIEW_SELECT_STRING + "WHERE rating = ?;";
+        String sql = REVIEW_SELECT_STRING + "AND rating = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, rating);
             while (results.next()) {
@@ -154,7 +152,7 @@ public class JdbcReviewDao implements ReviewDao{
     @Override
     public boolean deleteReview(int id) {
         boolean deleted = false;
-        String sql = "DELETE FROM review WHERE review_id = ?;";
+        String sql = "UPDATE review SET active= false WHERE review_id=?;";
 
         try{
             jdbcTemplate.update(sql, id);
