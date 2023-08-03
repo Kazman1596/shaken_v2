@@ -14,6 +14,14 @@ public class Ingredient {
         this.name = name;
     }
 
+    //For testing
+    public Ingredient(int ingredientId, String quantity, String measurement, String name) {
+        this.ingredientId = ingredientId;
+        this.quantity = quantity;
+        this.measurement = measurement;
+        this.name = name;
+    }
+
     public int getIngredientId() {
         return ingredientId;
     }

@@ -1,7 +1,7 @@
 package org.example.dao;
-import org.example.model.Account;
 
 import org.example.exception.DaoException;
+import org.example.model.Account;
 import org.example.model.RegisterUserDto;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -10,16 +10,18 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class JdbcAccountDao implements AccountDao {
+    //TODO: Integration Tests for AccountDao
     private final String ACCOUNT_SELECT_STRING = "SELECT account_id, first_name, last_name, email, profile_picture, bio, username, password, date_added FROM account ";
     private final JdbcTemplate jdbcTemplate;
 
-    public JdbcAccountDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public JdbcAccountDao(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override
@@ -105,6 +107,47 @@ public class JdbcAccountDao implements AccountDao {
             throw new DaoException("Data integrity violation", e);
         }
         return newAccount;
+    }
+
+    //TODO: Secure way to change password before hashing
+    @Override
+    public Account updateAccount(Account account) {
+        Account updatedAccount = null;
+        String sql = "UPDATE account SET first_name=?, last_name=?, email=?, username=? WHERE account_id=?;";
+        try {
+            int rowCount = jdbcTemplate.update(sql, account.getFirstName(), account.getLastName(), account.getEmail(), account.getUsername(), account.getId());
+            if (rowCount == 0) {
+                throw new DaoException("Trouble finding your account");
+            } else {
+                updatedAccount = getAccountById(account.getId());
+            }
+        } catch (CannotGetJdbcConnectionException ex) {
+            throw new DaoException("Unable to connect to the server or database", ex);
+        } catch (DataIntegrityViolationException ex) {
+            throw new DaoException("Data Integrity Violation", ex);
+        }
+
+        return updatedAccount;
+    }
+
+    @Override
+    public boolean deleteAccount(int id) {
+        boolean deleted = false;
+        String sqlReview = "DELETE FROM review WHERE account_id = ?;";
+
+        String sqlAccount = "DELETE FROM account WHERE account_id = ?;";
+
+        try{
+            jdbcTemplate.update(sqlReview, id);
+            jdbcTemplate.update(sqlAccount, id);
+            deleted = true;
+        } catch (CannotGetJdbcConnectionException ex) {
+            throw new DaoException("Unable to connect to the server or database", ex);
+        } catch (DataIntegrityViolationException ex) {
+            throw new DaoException("Data Integrity Violation", ex);
+        }
+
+        return deleted;
     }
 
     private Account mapRowToUser(SqlRowSet rs) {

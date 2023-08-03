@@ -4,7 +4,7 @@ public class IngredientRecipeDto {
     private int recipeId;
     private int ingredientId;
 
-    IngredientRecipeDto(int recipeId, int ingredientId) {
+    public IngredientRecipeDto(int recipeId, int ingredientId) {
         this.recipeId = recipeId;
         this.ingredientId = ingredientId;
     }

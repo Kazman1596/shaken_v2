@@ -16,6 +16,10 @@ public interface AccountDao {
     Account getAccountByUsername(String username);
 
     Account createAccount(RegisterUserDto user);
+
+    Account updateAccount(Account account);
+
+    boolean deleteAccount(int id);
 }
 
 //

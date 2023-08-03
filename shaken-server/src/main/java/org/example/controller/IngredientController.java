@@ -60,9 +60,9 @@ public class IngredientController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
-    public void deleteIngredient(@PathVariable int id) {
-        ingredientDao.deleteIngredient(id);
+    @RequestMapping(path = "/recipe/{recipeId}/{ingredientId}", method = RequestMethod.DELETE)
+    public void removeIngredientFromRecipe(@PathVariable int recipeId, @PathVariable int ingredientId) {
+        ingredientDao.removeIngredientFromRecipe(ingredientId, recipeId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

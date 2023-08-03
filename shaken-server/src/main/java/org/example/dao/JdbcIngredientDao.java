@@ -15,6 +15,7 @@ import java.util.List;
 
 @Component
 public class JdbcIngredientDao implements IngredientDao {
+    //TODO: Integration Tests for IngredientDao
     private final String INGREDIENT_SELECT_STRING = "SELECT ingredient_id, quantity, unit, name FROM ingredient ";
     private final JdbcTemplate jdbcTemplate;
     public JdbcIngredientDao(DataSource dataSource) {
@@ -79,6 +80,7 @@ public class JdbcIngredientDao implements IngredientDao {
         return ingredient;
     }
 
+    //TODO: creating an ingredient should only be associated with creating/editing a recipe, so we need a separate recipeID
     @Override
     public Ingredient createIngredient(Ingredient newIngredient) {
         Ingredient ingredient = null;
@@ -118,7 +120,7 @@ public class JdbcIngredientDao implements IngredientDao {
     public int removeIngredientFromRecipe(int ingredientId, int recipeId) {
         int deletedRows = 0;
 
-        String sql = "DELETE FROM ingredient_recipe WHERE ingredient_id = ? AND recipe_id = ?;";
+        String sql = "DELETE FROM recipe_ingredient WHERE ingredient_id = ? AND recipe_id = ?;";
 
         try{
             deletedRows = jdbcTemplate.update(sql, ingredientId, recipeId);
@@ -142,28 +144,6 @@ public class JdbcIngredientDao implements IngredientDao {
         } catch (DataIntegrityViolationException ex) {
             throw new DaoException("Data Integrity Violation", ex);
         }
-    }
-
-    @Override
-    public List<Ingredient> getIngredientsByRecipeId(int recipeId) {
-        List<Ingredient> returnedIngredients = new ArrayList<>();
-        String sql = "SELECT i.ingredient_id, i.quantity, i.unit, i.name FROM ingredient i\n" +
-                "JOIN recipe_ingredient ri\n" +
-                "\tON ri.ingredient_id = i.ingredient_id\n" +
-                "JOIN recipe r\n" +
-                "\tON ri.recipe_id = r.recipe_id\n" +
-                "WHERE r.recipe_id = 3256;";
-        try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-            while (results.next()) {
-                Ingredient ingredient = mapRowToIngredient(results);
-                returnedIngredients.add(ingredient);
-            }
-        } catch (CannotGetJdbcConnectionException ex) {
-            throw new DaoException("Unable to connect to server or database", ex);
-        }
-
-        return returnedIngredients;
     }
 
     private Ingredient mapRowToIngredient(SqlRowSet results) {

@@ -22,7 +22,16 @@ public class Review {
     private LocalTime postTime;
 
     public Review() {};
-
+    public Review(int reviewId, int recipeId, int userId, String title, String description, int rating) {
+        this.reviewId = reviewId;
+        this.recipeId = recipeId;
+        this.userId = userId;
+        this.title = title;
+        this.description = description;
+        this.rating = rating;
+        this.postDate = LocalDate.now();
+        this.postTime = LocalTime.now();
+    }
     public Review(int recipeId, int userId, String title, String description, int rating) {
         this.recipeId = recipeId;
         this.userId = userId;

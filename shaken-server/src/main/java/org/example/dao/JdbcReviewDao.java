@@ -15,7 +15,7 @@ import java.util.List;
 public class JdbcReviewDao implements ReviewDao{
     //TODO: Integration Tests for ReviewDao
 
-    private static final String REVIEW_SELECT_STRING = "SELECT title, recipe_id, account_id, description, rating, post_date, post_time FROM review ";
+    private static final String REVIEW_SELECT_STRING = "SELECT review_id, title, recipe_id, account_id, description, rating, post_date, post_time FROM review ";
     private final JdbcTemplate jdbcTemplate;
 
     public JdbcReviewDao(DataSource dataSource) {
@@ -97,7 +97,7 @@ public class JdbcReviewDao implements ReviewDao{
     @Override
     public List<Review> getReviewsByRating(int rating) {
         List<Review> returnedReviews = new ArrayList<>();
-        String sql = REVIEW_SELECT_STRING + "WHERE review = ?;";
+        String sql = REVIEW_SELECT_STRING + "WHERE rating = ?;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, rating);
             while (results.next()) {
@@ -154,7 +154,7 @@ public class JdbcReviewDao implements ReviewDao{
     @Override
     public boolean deleteReview(int id) {
         boolean deleted = false;
-        String sql = "DELETE FROM recipe WHERE review_id = ?;";
+        String sql = "DELETE FROM review WHERE review_id = ?;";
 
         try{
             jdbcTemplate.update(sql, id);
@@ -171,7 +171,8 @@ public class JdbcReviewDao implements ReviewDao{
     private Review mapRowToReview(SqlRowSet results) {
         Review review = new Review();
         review.setReviewId(results.getInt("review_id"));
-        review.setUserId(results.getInt("user_id"));
+        review.setUserId(results.getInt("account_id"));
+        review.setRecipeId(results.getInt("recipe_id"));
         review.setTitle(results.getString("title"));
         review.setDescription(results.getString("description"));
         review.setRating(results.getInt("rating"));

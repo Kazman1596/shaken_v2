@@ -23,6 +23,16 @@ public class RegisterUserDto {
     private String email;
     private LocalDate dateAdded = LocalDate.now();
 
+    public RegisterUserDto() {};
+
+    //For testing
+    public RegisterUserDto(String firstName, String lastName, String email, String username, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
 
     public String getUsername() {
         return username;
