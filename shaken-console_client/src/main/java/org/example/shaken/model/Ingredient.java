@@ -6,7 +6,15 @@ public class Ingredient {
     private String measurement;
     private String name;
 
+    public Ingredient() {};
     public Ingredient(String quantity, String measurement, String name) {
+        this.quantity = quantity;
+        this.measurement = measurement;
+        this.name = name;
+    }
+
+    public Ingredient(int ingredientId, String quantity, String measurement, String name) {
+        this.ingredientId = ingredientId;
         this.quantity = quantity;
         this.measurement = measurement;
         this.name = name;

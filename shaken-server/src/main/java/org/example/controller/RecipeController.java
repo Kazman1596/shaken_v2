@@ -25,6 +25,11 @@ public class RecipeController {
         return recipeDao.getRecipes();
     }
 
+    @RequestMapping(path="/search", method = RequestMethod.GET)
+    public List<Recipe> getRecipesByIngredients(@RequestParam(defaultValue = "[]") String[] ingredients) {
+        return recipeDao.getRecipesByIngredientList(ingredients);
+    }
+
     @RequestMapping(path="/{id}", method = RequestMethod.GET)
     public Recipe getRecipeById(@PathVariable int id) {
         Recipe recipe = recipeDao.getRecipeById(id);
@@ -45,9 +50,9 @@ public class RecipeController {
         }
     }
 
-    @RequestMapping(path="/ingredient/{id}", method = RequestMethod.GET)
-    public List<Recipe> getRecipesByIngredientId(@PathVariable int id) {
-        List<Recipe> recipes = recipeDao.getRecipesByIngredientId(id);
+    @RequestMapping(path="/ingredient/{name}", method = RequestMethod.GET)
+    public List<Recipe> getRecipesByIngredientName(@PathVariable String name) {
+        List<Recipe> recipes = recipeDao.getRecipesByIngredientName(name, true);
         if (recipes.size() == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ingredient does not exist");
         } else {

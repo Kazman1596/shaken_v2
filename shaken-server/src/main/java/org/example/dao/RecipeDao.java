@@ -28,6 +28,8 @@ public interface RecipeDao {
     //Deletes an existing recipe by id
     //Returns number of deleted items
     int deleteRecipe(int id);
-    List<Recipe> getRecipesByIngredientId(int ingredientId);
+    List<Recipe> getRecipesByIngredientName(String ingredientSearch, boolean wild);
+
+    List<Recipe> getRecipesByIngredientList(String[] ingredients);
 
 }

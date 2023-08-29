@@ -47,7 +47,21 @@ public class IngredientService {
         return ingredient;
     }
 
-    public Ingredient createIngredient(Ingredient newIngredient) {
+    public List<Ingredient> getIngredientsByRecipeId(int id) {
+        Ingredient[] ingredients = null;
+        try {
+            ingredients = restTemplate.getForObject(API_BASE_URL + "recipe/" + id, Ingredient[].class);
+        } catch (RestClientException e) {
+            BasicLogger.log(e.getMessage());
+        }
+        if (ingredients != null) {
+            return Arrays.asList(ingredients);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public Ingredient createIngredient(Ingredient newIngredient, int recipeId) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -55,7 +69,7 @@ public class IngredientService {
         Ingredient result = null;
 
         try {
-            result = restTemplate.postForObject(API_BASE_URL, entity, Ingredient.class);
+            result = restTemplate.postForObject(API_BASE_URL + "/recipe/" + recipeId, entity, Ingredient.class);
         }
         catch(RestClientResponseException e) {
             BasicLogger.log(e.getStatusText());

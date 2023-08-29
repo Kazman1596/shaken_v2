@@ -1,5 +1,6 @@
 package org.example.shaken.services;
 
+import org.example.shaken.model.Ingredient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.example.shaken.model.Recipe;
@@ -20,6 +21,9 @@ public class RecipeService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
+    //For ingredientMap
+    IngredientService ingredientService = new IngredientService();
+
     public List<Recipe> getRecipes(String title) {
         Recipe[] recipes = null;
 
@@ -37,35 +41,6 @@ public class RecipeService {
         }
     }
 
-    //Probably want to create a SQL call in our controller for ingredients, but for now this is good practice on Big O and optimization instead of an inner for-loop
-    public HashMap<String, List<Recipe>> getIngredientMap() {
-        List<Recipe> recipes = getRecipes("");
-        HashMap<String, List<Recipe>> recipesByIngredient = new HashMap<>();
-
-        for (Recipe recipe : recipes) {
-            String ingredients = recipe.getIngredients();
-            String[] ingredientArray = ingredients.split(" \\+ ");
-            for (String ingredient : ingredientArray) {
-                recipesByIngredient.putIfAbsent(ingredient, new ArrayList<Recipe>());
-                recipesByIngredient.get(ingredient).add(recipe);
-            }
-        }
-
-
-        return recipesByIngredient;
-    }
-
-    public List<String> getIngredientList() {
-        List<Recipe> recipes = getRecipes("");
-        List<String> ingredients = new ArrayList<>();
-
-        for (Recipe recipe : recipes) {
-            ingredients.add(recipe.getIngredients());
-        }
-
-        return ingredients;
-    }
-
     public Recipe getRecipeById(int id) {
         Recipe recipe = null;
         try{
@@ -77,7 +52,18 @@ public class RecipeService {
         return recipe;
     }
 
-    //TODO: We might want to move this one to user controller when the time comes
+    //TODO: HashMap is not the move. Suggested -> TreeMap... look into that
+    public HashMap<String, List<Recipe>> getIngredientMap() {
+        List<Ingredient> ingredients = ingredientService.getIngredients();
+        HashMap<String, List<Recipe>> ingredientMap = new HashMap<>();
+        for (Ingredient ingredient : ingredients) {
+            List<Recipe> recipes = getRecipesByIngredientName(ingredient.getName());
+            ingredientMap.put(ingredient.getName(), recipes);
+        }
+
+        return ingredientMap;
+    }
+
     public List<Recipe> getRecipesByAccountId(int id) {
         Recipe[] recipes = null;
         try{
@@ -94,7 +80,20 @@ public class RecipeService {
         }
     }
 
-    //TODO: Fix createRecipe (probably has to do with date/time tbh)
+    public List<Recipe> getRecipesByIngredientName(String name) {
+        Recipe[] recipes = null;
+        try{
+            String url = API_BASE_URL + "/ingredient/" + name;
+            recipes = restTemplate.getForObject(url, Recipe[].class);
+        } catch (RestClientException e) {
+            BasicLogger.log(e.getMessage());
+        }
+
+        return (recipes != null) ? Arrays.asList(recipes) : new ArrayList<>();
+
+    }
+
+    //TODO: Fix createRecipe to route ingredients (perhaps recipe model is includes List<Ingredient>
     public Recipe createRecipe(Recipe newRecipe) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

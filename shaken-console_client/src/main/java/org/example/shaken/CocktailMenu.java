@@ -1,4 +1,5 @@
 package org.example.shaken;
+import org.example.shaken.model.AuthenticatedUser;
 import org.example.shaken.model.Recipe;
 import org.example.shaken.services.RecipeService;
 
@@ -20,7 +21,11 @@ public class CocktailMenu {
     Scanner userInput = new Scanner(System.in);
     SearchResultsMenu searchResultsMenu = new SearchResultsMenu();
     RecipeService recipeService = new RecipeService();
+    AuthenticatedUser currentUser;
 
+    CocktailMenu(AuthenticatedUser currentUser) {
+        this.currentUser = currentUser;
+    }
     public void runCocktailDatabaseMenu() {
         while(true) {
             Object choice = menu.getChoiceFromOptions(cocktailMenuOptions);
@@ -45,7 +50,7 @@ public class CocktailMenu {
         System.out.println("Instructions");
         String instructions = in.nextLine();
 
-        return new Recipe(title, ingredients, instructions, "Cocktail Glass", 1);
+        return new Recipe(title, ingredients, instructions, "Cocktail Glass", currentUser.getUser().getId());
     }
 
     public void updateRecipePrompt(Scanner in) {

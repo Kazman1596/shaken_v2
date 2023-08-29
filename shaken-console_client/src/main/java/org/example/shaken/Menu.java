@@ -14,7 +14,6 @@ public class Menu {
         this.in = new Scanner(input);
     }
 
-    //TODO: Refactor the very similar getChoice and getRecipeChoice methods below
     public Object getChoiceFromOptions(Object[] options) {
         Object choice = null;
         while(choice == null) {

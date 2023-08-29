@@ -42,6 +42,25 @@ public class JdbcRecipeDaoTests extends BaseDaoTests {
     }
 
     @Test
+    public void getRecipesByIngredientName_returns_correct() {
+        List<Recipe> recipes = sut.getRecipesByIngredientName("tequila", false);
+        Assert.assertEquals(recipes.size(), 1);
+    }
+
+    @Test
+    public void getRecipesByIngredientName_returns_empty_if_not_wild() {
+        List<Recipe> recipes = sut.getRecipesByIngredientName("teq", false);
+
+        Assert.assertEquals(recipes.size(), 0);
+    }
+
+    @Test
+    public void getRecipesByIngredientName_returns_correct_if_incomplete() {
+        List<Recipe> recipes = sut.getRecipesByIngredientName("teq", true);
+        Assert.assertEquals(recipes.size(), 1);
+    }
+
+    @Test
     public void getRecipesByTitle_returns_empty_when_not_found() {
         List<Recipe> recipes = sut.getRecipesByTitle("lorem ipsum", true);
         Assert.assertEquals(0, recipes.size());
