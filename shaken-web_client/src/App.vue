@@ -1,16 +1,20 @@
 <script>
 import { RouterView } from 'vue-router';
+import Header from './components/Header.vue'
+import MainSearch from './components/MainSearch.vue';
+export default {
+  components: {
+    Header,
+    MainSearch
+}
+}
 
 
 </script>
 
 <template>
-  <header>
-
-    <div>
-      
-    </div>
-  </header>
+  <Header />
+  <MainSearch />
 
   <RouterView />
 </template>

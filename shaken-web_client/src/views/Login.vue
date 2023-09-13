@@ -40,8 +40,12 @@ export default {
   },
   methods: {
     login() {
+      const userCred = {
+        username: this.user.username.toLowerCase(),
+        password: this.user.password
+      }
       authService
-        .login(this.user)
+        .login(userCred)
         .then(response => {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);

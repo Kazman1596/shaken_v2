@@ -3,6 +3,8 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
+import RecipeSearch from '../views/RecipeSearch.vue'
+import IngredientSearch from '../views/IngredientSearch.vue'
 import { store } from '../store'
 
 /**
@@ -48,6 +50,16 @@ const router = createRouter({
       meta: {
         requiresAuth: false
       }
+    },
+    {
+      path: "/search/:input",
+      name: "searchRecipe",
+      component: RecipeSearch
+    },
+    {
+      path: "/search/ingredients/:ingredients",
+      name: "searchIngredients",
+      component: IngredientSearch
     }
   ]
 })
