@@ -1,13 +1,22 @@
 <script>
 export default {
-  name: "header"
+  name: "header",
+  methods: {
+    home() {
+      const route = {
+          name: 'home',
+        }
+  
+        this.$router.push(route)
+    }
+  }
 };
 </script>
 
 <template>
   <div class="header">
     <div id="logo">
-      <h1>Shaken</h1>
+      <h1 v-on:click="home()">Shaken</h1>
     </div>
     <nav>
         <router-link v-bind:to="{name: 'login'}" v-if="$store.state.token == ''">Login</router-link>
@@ -29,7 +38,23 @@ export default {
   flex: 0 1 auto;
   position: absolute;
   left: 50%;
-  transform: translateX(-50%)
+  transform: translateX(-50%);
+}
+
+#logo h1 {
+  font-family: 'Oooh Baby', 'Montserrat', cursive;
+  letter-spacing: 4px;
+  font-size: 42px;
+}
+
+#logo h1:hover {
+  cursor: pointer;
+  color: #ffaa00;
+  transition-duration: 250ms;
+}
+
+#logo h1:not(:hover) {
+  transition-duration: 250ms;
 }
 
 nav {

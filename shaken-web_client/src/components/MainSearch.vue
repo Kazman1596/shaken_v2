@@ -1,15 +1,15 @@
 <template>
   <div class="home">
     <nav>
-      <h3 v-on:click="byRecipe()">By Recipe</h3>
-      <h3 v-on:click="byIngredient()">By Ingredient</h3>
+      <h3 v-bind:class="(recipeOption) ? 'option selected' : 'option'" v-on:click="byRecipe()">By Recipe</h3>
+      <h3 v-bind:class="(ingredientOption) ? 'option selected' : 'option'" v-on:click="byIngredient()">By Ingredient</h3>
     </nav>
     <div v-if="recipeOption" class="search">
       <input v-model="recipeInput" v-on:keyup.enter="searchRecipe()" type="text" placeholder="Search for a recipe" />
     </div>
     <div v-if="ingredientOption" class="search">
       <div id="ingredient-list">
-        <div v-for="ingredient in ingredientList" v-bind:id="ingredient">
+        <div class="ingredient" v-for="ingredient in ingredientList" v-bind:id="ingredient">
           <p>{{ ingredient }}</p>
         </div>
       </div>
@@ -76,13 +76,24 @@
     justify-content: center;
   }
 
-  nav h3 {
+  .option {
     margin: 5%;
     cursor: pointer;
+    border-bottom: solid 1px transparent;
   }
 
-  nav h3:hover {
-    color:#626262
+  .option:hover {
+    color:#00eeff;
+    transition-duration: 250ms;
+  }
+
+  .option:not(:hover) {
+    transition-duration: 250ms;
+  }
+
+  .selected {
+    border-bottom: solid 1px #00eeff;
+    color: #00eeff;
   }
 
   input {
@@ -91,9 +102,13 @@
     padding-bottom: 7px;
     padding-left: 10px;
     font-size: 14px;
-    border: solid 1px #0c0c0c;
+    border: solid 1px #ffffff;
     border-radius: 8px;
     margin: 10px;
+  }
+
+  ::placeholder {
+    color: #d3d3d3;
   }
 
   .search {
@@ -102,12 +117,47 @@
 
   #ingredient-list {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+  }
+
+  .ingredient {
+    margin: 25px;
+  }
+
+  .ingredient p {
+    border: solid 1px #ffaa00;
+    border-radius: 10px;
+    min-width: 100px;
+    padding: 5px;
+    animation: fadeIn s;
+  }
+
+  @keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
   }
 
   #search-button {
     display: flex;
     justify-content: center;
+    margin: 15px;
+  }
+
+  #search-button button {
+    border: solid 1px #ffaa00;
+    border-radius: 10px;
+    padding: 6px;
+    cursor: pointer;
+  }
+
+  #search-button button:hover {
+    border: solid 1px #00eeff;
+    color: #00eeff;
+    transition-duration: 250ms;
+  }
+
+  #search-button button:not(:hover) {
+    transition-duration: 250ms;
   }
 
 </style>

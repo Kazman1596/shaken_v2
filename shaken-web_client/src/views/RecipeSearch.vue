@@ -1,19 +1,18 @@
 <template>
     <div>
         <div class="recipe-list" v-for="recipe in results" v-bind:key="recipe.id">
-            <h3>{{ recipe.title }}</h3>
-            <h4>{{ recipe.glass }}</h4>
-            <p>{{ recipe.ingredients }}</p>
-            <p>{{ recipe.instructions }}</p>
+            <RecipeCard :recipe="recipe"/>
         </div>
     </div>
   </template>
   
   <script>
-    import RecipeService from '../services/RecipeService';
+    import RecipeCard from '../components/RecipeCard.vue';
+  import RecipeService from '../services/RecipeService';
 
   export default {
     name: "searchResults",
+    components: {RecipeCard},
     data() {
       return {
         searchInput: "",
