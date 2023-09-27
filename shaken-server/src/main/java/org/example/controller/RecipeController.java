@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/recipes")
+@CrossOrigin
 public class RecipeController {
     @Autowired
     public RecipeDao recipeDao;

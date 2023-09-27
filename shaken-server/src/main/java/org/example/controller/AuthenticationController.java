@@ -21,6 +21,7 @@ import javax.validation.Valid;
  * Controller to authenticate users.
  */
 @RestController
+@CrossOrigin
 public class AuthenticationController {
 
     private final TokenProvider tokenProvider;

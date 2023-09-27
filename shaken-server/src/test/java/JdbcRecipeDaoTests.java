@@ -111,6 +111,15 @@ public class JdbcRecipeDaoTests extends BaseDaoTests {
         Assert.assertNull(retreivedRecipe);
     }
 
+    @Test
+    public void getRecipesByIngredientList_returns_expected_values() {
+        String[] search = new String[] {"lime", "salt"};
+        List<Recipe> returnedRecipes = sut.getRecipesByIngredientList(search);
+
+//        has at least one ingredient (i.e. lime will have 2)
+        Assert.assertEquals(returnedRecipes.size(), 2);
+    }
+
    private void assertRecipesMatch(Recipe expected, Recipe result) {
        Assert.assertEquals(expected.getRecipeId(), result.getRecipeId());
        Assert.assertEquals(expected.getTitle(), result.getTitle());
