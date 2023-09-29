@@ -1,10 +1,11 @@
 <template>
-  <div class="home">
+  <div id="home">
     <nav>
       <h3 v-bind:class="(recipeOption) ? 'option selected' : 'option'" v-on:click="byRecipe()">By Recipe</h3>
       <h3 v-bind:class="(ingredientOption) ? 'option selected' : 'option'" v-on:click="byIngredient()">By Ingredient</h3>
     </nav>
     <div v-if="recipeOption" class="search">
+      <div id="recipe-search"></div>
       <input v-model="recipeInput" v-on:keyup.enter="searchRecipe()" type="text" placeholder="Search for a recipe" />
     </div>
     <div v-if="ingredientOption" class="search">
@@ -71,6 +72,14 @@
 
 <style scoped>
 
+  #home {
+    margin: 95px;
+  }
+
+  #recipe-search {
+    min-height: 113px;
+  }
+
   nav {
     display: flex;
     justify-content: center;
@@ -118,6 +127,7 @@
   #ingredient-list {
     display: flex;
     justify-content: center;
+    min-height: 113px;
   }
 
   .ingredient {

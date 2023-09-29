@@ -6,28 +6,22 @@
         {{ registrationErrorMsg }}
       </div>
       <div class="form-input-group">
-        <label for="firstName">First Name</label>
-        <input type="text" id="firstName" v-model="user.firstName" required autofocus />
+        <input type="text" id="firstName" v-model="user.firstName" placeholder="First Name" required autofocus />
       </div>
       <div class="form-input-group">
-        <label for="username">Last Name</label>
-        <input type="text" id="lastName" v-model="user.lastName" required autofocus />
+        <input type="text" id="lastName" v-model="user.lastName" placeholder="Last Name" required autofocus />
       </div>
       <div class="form-input-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" v-model="user.email" required autofocus />
+        <input type="email" id="email" v-model="user.email" placeholder="Email" required autofocus />
       </div>
       <div class="form-input-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required autofocus />
+        <input type="text" id="username" v-model="user.username" placeholder="Username" required autofocus />
       </div>
       <div class="form-input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required />
+        <input type="password" id="password" v-model="user.password" placeholder="Password" required />
       </div>
       <div class="form-input-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
+        <input type="password" id="confirmPassword" v-model="user.confirmPassword" placeholder="Confirm Password" required />
       </div>
       <button type="submit">Create Account</button>
       <p><router-link :to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
@@ -89,10 +83,49 @@ export default {
 </script>
 
 <style scoped>
+#register {
+  text-align: center;
+  border: 1px solid #00eeff;
+  border-radius: 15px;
+  margin: 100px 30%;
+}
 .form-input-group {
   margin-bottom: 1rem;
 }
+
 label {
   margin-right: 0.5rem;
+}
+
+button {
+  border: solid 1px #ffaa00;
+  border-radius: 10px;
+  padding: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  border: solid 1px #00eeff;
+  color: #00eeff;
+  transition-duration: 250ms;
+}
+
+button:not(:hover) {
+  transition-duration: 250ms;
+}
+
+input {
+  padding-right: 20%;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 10px;
+  font-size: 14px;
+  border: solid 1px #ffffff;
+  border-radius: 8px;
+  margin: 10px;
+}
+
+::placeholder {
+  color: #d3d3d3;
 }
 </style>
