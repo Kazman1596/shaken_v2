@@ -35,7 +35,6 @@
         RecipeService.searchIngredients(this.ingredients).then((response) => {
             this.results = response.data;
         })
-        //this is a test to see if my github turns green with this commit
       }
     }
   };

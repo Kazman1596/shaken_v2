@@ -5,6 +5,7 @@ import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import RecipeSearch from '../views/RecipeSearch.vue'
 import IngredientSearch from '../views/IngredientSearch.vue'
+import Profile from '../views/Profile.vue'
 import { store } from '../store'
 
 /**
@@ -60,6 +61,11 @@ const router = createRouter({
       path: "/search/ingredients/:ingredients",
       name: "searchIngredients",
       component: IngredientSearch
+    },
+    {
+      path: "/user/:username",
+      name: "userProfile",
+      component: Profile
     }
   ]
 })
