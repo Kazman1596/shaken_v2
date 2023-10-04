@@ -38,19 +38,21 @@
         accountService.getAccountByUsername(this.username).then((response) => {
             console.log(response.data)
             this.user = response.data
+            this.hasProfilePicture();
+            this.hasBio();
         });
-        this.hasProfilePicture();
-        this.hasBio();
     },
     methods: {
         // work in progress //
         hasProfilePicture() {
+            console.log(this.user.profilePicture)
             if (!this.user.profilePicture) {
                 this.user.profilePicture = "https://img.freepik.com/premium-vector/cocktail-line-icon-cocktail-outline-icon_645658-3893.jpg?w=2000"
             }
         },
         // work in progress //
         hasBio() {
+            console.log(this.user.bio)
             if (!this.user.bio) {
                 this.user.bio = "No bio yet."
             }

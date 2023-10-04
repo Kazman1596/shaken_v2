@@ -157,6 +157,8 @@ public class JdbcAccountDao implements AccountDao {
         account.setFirstName(rs.getString("first_name"));
         account.setLastName(rs.getString("last_name"));
         account.setEmail(rs.getString("email"));
+        account.setBio(rs.getString("bio"));
+        account.setProfilePicture(rs.getString("profile_picture"));
         account.setUsername(rs.getString("username"));
         account.setPassword(rs.getString("password"));
         account.setDateAdded(rs.getDate("date_added"));

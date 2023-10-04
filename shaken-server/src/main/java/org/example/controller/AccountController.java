@@ -1,12 +1,14 @@
 package org.example.controller;
 
 import org.example.dao.AccountDao;
+import org.example.exception.DaoException;
 import org.example.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -42,6 +44,16 @@ public class AccountController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account was not found");
         } else {
             return account;
+        }
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    public Account updateAccount(@PathVariable int id, @Valid @RequestBody Account account) {
+        try {
+            account.setId(id);
+            return accountDao.updateAccount(account);
+        } catch (DaoException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found.");
         }
     }
 
