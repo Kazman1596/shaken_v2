@@ -14,7 +14,6 @@
     components: {Profile},
     data() {
       return {
-        user: {},
         invalidCredentials: false
       };
     },

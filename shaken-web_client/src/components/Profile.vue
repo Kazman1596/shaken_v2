@@ -27,6 +27,7 @@
       return {
         user: {
             profilePicture: "",
+            bio: "",
         },
         invalidCredentials: false,
         username: ""
@@ -38,13 +39,20 @@
             console.log(response.data)
             this.user = response.data
         });
-        this.profilePicture();
+        this.hasProfilePicture();
+        this.hasBio();
     },
     methods: {
         // work in progress //
-        profilePicture() {
-            if (this.user.profilePicture == " ") {
+        hasProfilePicture() {
+            if (!this.user.profilePicture) {
                 this.user.profilePicture = "https://img.freepik.com/premium-vector/cocktail-line-icon-cocktail-outline-icon_645658-3893.jpg?w=2000"
+            }
+        },
+        // work in progress //
+        hasBio() {
+            if (!this.user.bio) {
+                this.user.bio = "No bio yet."
             }
         }
     }
@@ -60,12 +68,38 @@
 #profile-header {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
+}
+
+#profile-image {
+    display: flex;
+    flex-direction: column;
+}
+
+#profile-image button {
+    margin-top: 15px;
 }
 
 #profile-image img {
     width: 200px;
     border-radius: 50%;
+}
+
+button {
+  border: solid 1px #ffaa00;
+  border-radius: 10px;
+  padding: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  border: solid 1px #00eeff;
+  color: #00eeff;
+  transition-duration: 250ms;
+}
+
+button:not(:hover) {
+  transition-duration: 250ms;
 }
 
 </style>
