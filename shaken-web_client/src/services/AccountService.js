@@ -8,6 +8,10 @@ export default {
 
   getAccountById(id) {
     return axios.get(`/accounts/${id}`)
+  },
+
+  updateAccount(account) {
+    return axios.put(`/accounts/${account.id}`, account)
   }
 
 }
