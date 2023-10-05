@@ -2,8 +2,13 @@
     <div id="profile">
         <div id="profile-header">
             <div id="profile-image">
-                <img src="https://img.freepik.com/premium-vector/cocktail-line-icon-cocktail-outline-icon_645658-3893.jpg?w=2000" />
-                <button>Edit Image</button>
+                <img v-bind:src="user.profilePicture" />
+                <button v-show="!editPic" v-on:click="editPic = !editPic">Edit Image</button>
+                <div v-show="editPic">
+                    <input type="text" id="editPic" placeholder="Image URL..."/>
+                    <button>Update</button>
+                    <button v-on:click="editPic = !editPic">Cancel</button>
+                </div>
             </div>
             <div id="name">
                 <h3>{{ `${user.firstName} ${user.lastName}` }}</h3>
@@ -13,7 +18,12 @@
         <div id="about">
             <h4>Bio</h4>
             <p>{{ user.bio }}</p>
-            <button>Edit Bio</button>
+            <button v-show="!editBio" v-on:click="editBio = !editBio">Edit Bio</button>
+            <div v-show="editBio">
+                <textarea />
+                <button>Update</button>
+                <button v-on:click="editBio = !editBio">Cancel</button>
+            </div>
         </div>
     </div>
   </template>
@@ -30,7 +40,9 @@
             bio: "",
         },
         invalidCredentials: false,
-        username: ""
+        username: "",
+        editBio: false,
+        editPic: false
       };
     },
     created() {
@@ -43,14 +55,12 @@
         });
     },
     methods: {
-        // work in progress //
         hasProfilePicture() {
             console.log(this.user.profilePicture)
             if (!this.user.profilePicture) {
                 this.user.profilePicture = "https://img.freepik.com/premium-vector/cocktail-line-icon-cocktail-outline-icon_645658-3893.jpg?w=2000"
             }
         },
-        // work in progress //
         hasBio() {
             console.log(this.user.bio)
             if (!this.user.bio) {
