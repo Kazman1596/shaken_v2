@@ -10,7 +10,7 @@
     </div>
     <div v-if="ingredientOption" class="search">
       <div id="ingredient-list">
-        <div class="ingredient" v-for="ingredient in ingredientList" v-bind:id="ingredient">
+        <div class="ingredient" v-for="ingredient in ingredientList" v-on:click="removeIngredient(ingredient)" v-bind:id="ingredient">
           <p>{{ ingredient }}</p>
         </div>
       </div>
@@ -55,6 +55,11 @@
       addIngredient() {
         this.ingredientList.push(this.ingredientInput)
         this.ingredientInput = "";
+      },
+      removeIngredient(ingredient) {
+        const i = this.ingredientList.indexOf(ingredient)
+
+        this.ingredientList.splice(i, 1)
       },
       searchIngredients() {
         const queryparams = this.ingredientList.join("&")
@@ -132,6 +137,10 @@
 
   .ingredient {
     margin: 25px;
+  }
+
+  .ingredient p:hover {
+    cursor: pointer;
   }
 
   .ingredient p {

@@ -14,7 +14,7 @@ export default {
 
 <template>
   <Header />
-  <!-- <MainSearch /> -->
+  <MainSearch />
   
   <RouterView />
 </template>
