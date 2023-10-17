@@ -3,7 +3,10 @@
         <div id="top">
             <h5>{{ recipe.rating }} Stars</h5>
             <h3 id="title">{{ recipe.title }}</h3>
-            <h5>User {{ recipe.accountId }}</h5>
+            <div id="created-by">
+                <router-link v-bind:to="{name: 'userProfile', params: {username: $store.state.user.username}}">{{ user.username }}</router-link>
+                <img class="profile-pic" v-bind:src="user.profilePicture" />
+            </div>
         </div>
         <div id="body">
             <h4 id="glass">{{ recipe.glass }}</h4>
@@ -16,6 +19,7 @@
 </template>
 
 <script>
+    import accountService from '../services/AccountService';
 
     export default {
     name: "searchResults",
@@ -25,8 +29,14 @@
     data() {
         return {
         ingredients: "",
-        results: []
+        results: [],
+        user: {}
         }
+    },
+    created() {
+        accountService.getAccountById(this.recipe.accountId).then((response => {
+            this.user = response.data
+        }))
     }
 };
 </script>
@@ -53,6 +63,22 @@
 
     #info {
         margin-left: 15px;
+    }
+
+    #created-by {
+        display: flex;
+        align-items: center;
+    }
+
+    .profile-pic {
+        height: 45px;
+        border-radius: 50%;
+        margin: 10px;
+    }
+
+    a{
+        text-decoration: none;
+        font-size: 14px;
     }
 
 
