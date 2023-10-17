@@ -72,7 +72,7 @@ nav {
 }
 
 #profile-greeting img {
-  width: 75px;
+  width: 50px;
   border-radius: 50%;
   margin: 15px;
 }
