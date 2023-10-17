@@ -113,9 +113,9 @@ public class JdbcAccountDao implements AccountDao {
     @Override
     public Account updateAccount(Account account) {
         Account updatedAccount = null;
-        String sql = "UPDATE account SET first_name=?, last_name=?, email=?, username=? WHERE account_id=?;";
+        String sql = "UPDATE account SET first_name=?, last_name=?, email=?, profile_picture=?, bio=?, username=? WHERE account_id=?;";
         try {
-            int rowCount = jdbcTemplate.update(sql, account.getFirstName(), account.getLastName(), account.getEmail(), account.getUsername(), account.getId());
+            int rowCount = jdbcTemplate.update(sql, account.getFirstName(), account.getLastName(), account.getEmail(), account.getProfilePicture(), account.getBio(), account.getUsername(), account.getId());
             if (rowCount == 0) {
                 throw new DaoException("Trouble finding your account");
             } else {

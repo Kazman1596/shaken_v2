@@ -15,7 +15,7 @@ public class Account {
    private String firstName;
    private String lastName;
    private String email;
-   private String profilePicture = " ";
+   private String profilePicture = "https://img.freepik.com/premium-vector/cocktail-line-icon-cocktail-outline-icon_645658-3893.jpg?w=2000";
    private String bio = " ";
    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
    private LocalDate dateAdded;

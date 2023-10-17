@@ -21,7 +21,10 @@ export default {
     <nav>
         <router-link v-bind:to="{name: 'login'}" v-if="$store.state.token == ''">Login</router-link>
         <div v-if="$store.state.token !=''">
+          <div>
             <p>Hello, <b>{{ $store.state.user.firstName }}</b></p>
+            <img v-bind:src="$store.state.user.profileImage" />
+          </div>
             <router-link v-bind:to="{name: 'logout'}">Logout</router-link>
         </div>
     </nav>
