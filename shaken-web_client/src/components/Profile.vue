@@ -69,6 +69,7 @@
 
             accountService.updateAccount(updatedAccount).then(() => {
                 this.user = updatedAccount;
+                this.$store.commit("SET_USER", updatedUser)
                 this.editBio = false;
                 this.editPic = false;
             }).catch((error) => {
