@@ -11,7 +11,12 @@
         <div id="body">
             <h4 id="glass">{{ recipe.glass }}</h4>
             <div id="info">
-                <p id="ingredients">{{ recipe.ingredients }}</p>
+                <!-- <p>{{ recipe.ingredients }}</p> -->
+                <div id="ingredients">
+                    <div v-for="ingredient in ingredients" v-bind:id="ingredient.id">
+                       <Ingredient :ingredient="ingredient"/>
+                    </div>
+                </div>
                 <p id="instructions">{{ recipe.instructions }}</p>
             </div>
         </div>
@@ -20,15 +25,18 @@
 
 <script>
     import accountService from '../services/AccountService';
+    import ingredientService from '../services/IngredientService';
+    import Ingredient from './Ingredient.vue';
 
     export default {
     name: "searchResults",
+    components: {Ingredient},
     props: {
         recipe: {}
     },
     data() {
         return {
-        ingredients: "",
+        ingredients: {},
         results: [],
         user: {}
         }
@@ -36,6 +44,11 @@
     created() {
         accountService.getAccountById(this.recipe.accountId).then((response => {
             this.user = response.data
+        }))
+
+        ingredientService.getIngredientsByRecipe(this.recipe.recipeId).then((response => {
+            console.log(response.data)
+            this.ingredients = response.data
         }))
     }
 };
@@ -63,6 +76,12 @@
 
     #info {
         margin-left: 15px;
+        min-width: 95%;
+    }
+
+    #ingredients {
+        display: flex;
+        justify-content: space-around;
     }
 
     #created-by {

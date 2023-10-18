@@ -85,4 +85,7 @@ nav {
   opacity: .5;
 }
 
+#profile-greeting img:not(:hover) {
+  transition-duration: 250ms;
+}
 </style>

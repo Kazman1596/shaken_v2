@@ -98,7 +98,6 @@
 #profile-header {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
 }
 
 #profile-image {
@@ -113,6 +112,10 @@
 #profile-image img {
     width: 200px;
     border-radius: 50%;
+}
+
+#name {
+    margin-left: 150px;
 }
 
 .edit {
