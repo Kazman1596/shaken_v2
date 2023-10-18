@@ -41,7 +41,7 @@
 };
 </script>
 
-<style>
+<style scoped>
     #card {
         margin: auto 10%;
         padding-bottom: 2%;
@@ -79,8 +79,17 @@
     a{
         text-decoration: none;
         font-size: 14px;
+        cursor: pointer;
+        border-bottom: 1px solid transparent;
     }
 
+    a:hover {
+        border-bottom: 1px solid #ffaa00;
+        transition-duration: 250ms;
+    }
 
+    a:not(:hover) {
+        transition-duration: 250ms;
+    }
 
 </style>

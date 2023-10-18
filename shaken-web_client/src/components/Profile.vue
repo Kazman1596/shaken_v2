@@ -3,11 +3,13 @@
         <div id="profile-header">
             <div id="profile-image">
                 <img v-bind:src="user.profilePicture" />
-                <button v-show="!editPic" v-on:click="editPic = !editPic">Edit Image</button>
-                <div v-show="editPic">
+                <button v-show="!editPic && this.$store.state.user.username === this.user.username" v-on:click="editPic = !editPic">Edit Image</button>
+                <div class="edit" v-show="editPic">
                     <input v-model="newProfilePicture" type="text" id="editPic" placeholder="Image URL..."/>
-                    <button v-on:click="updateProfile()">Update</button>
-                    <button v-on:click="editPic = !editPic">Cancel</button>
+                    <div id="img-buttons">
+                        <button v-on:click="updateProfile()">Update</button>
+                        <button v-on:click="editPic = !editPic">Cancel</button>
+                    </div>
                 </div>
             </div>
             <div id="name">
@@ -18,11 +20,13 @@
         <div id="about">
             <h4>Bio</h4>
             <p>{{ user.bio }}</p>
-            <button v-show="!editBio" v-on:click="editBio = !editBio">Edit Bio</button>
-            <div v-show="editBio">
+            <button v-show="!editBio && this.$store.state.user.username === this.user.username" v-on:click="editBio = !editBio">Edit Bio</button>
+            <div class="edit" v-show="editBio">
                 <textarea v-model="newBio" />
-                <button v-on:click="updateProfile()">Update</button>
-                <button v-on:click="editBio = !editBio">Cancel</button>
+                <div id="bio-buttons">
+                    <button v-on:click="updateProfile()">Update</button>
+                    <button v-on:click="editBio = !editBio">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
@@ -76,6 +80,7 @@
                 if(error.response) {
                     alert("Something went wrong: " + error.response.statusTest)
                 } else {
+                    // This error is showing and its incredibly unhelpful. We will come back to this.
                     alert("Unknown error occured")
                 }
             })
@@ -110,6 +115,30 @@
     border-radius: 50%;
 }
 
+.edit {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+#bio-buttons {
+    margin-top: 5px;
+    margin-left: 380px;
+}
+
+#bio-buttons button {
+    margin: 5px;
+}
+
+#img-buttons {
+    margin-top: 5px;
+    margin-left: 135px;
+}
+
+#img-buttons button {
+    margin: 5px;
+}
+
 button {
   border: solid 1px #ffaa00;
   border-radius: 10px;
@@ -125,6 +154,21 @@ button:hover {
 
 button:not(:hover) {
   transition-duration: 250ms;
+}
+
+input{
+    border: solid 1px #00eeff;
+    border-radius: 10px;
+    padding: 10px;
+    width: 250px;
+}
+
+textarea {
+    border: solid 1px #00eeff;
+    border-radius: 10px;
+    padding: 10px;
+    width: 500px;
+    height: 100px;
 }
 
 </style>

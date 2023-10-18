@@ -73,8 +73,16 @@ nav {
 
 #profile-greeting img {
   width: 50px;
+  border: 1px solid transparent;
+  padding: 2px;
   border-radius: 50%;
   margin: 15px;
+}
+
+#profile-greeting img:hover {
+  border: 1px solid #ffaa00;
+  transition-duration: 250ms;
+  opacity: .5;
 }
 
 </style>
