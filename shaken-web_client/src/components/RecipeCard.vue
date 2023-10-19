@@ -2,7 +2,7 @@
     <div id="card">
         <div id="top">
             <h5>{{ recipe.rating }} Stars</h5>
-            <h3 id="title">{{ recipe.title }}</h3>
+            <router-link v-bind:to="{name: 'recipe', params: {recipeId: recipe.recipeId}}"><h3 id="title">{{ recipe.title }}</h3></router-link>
             <div id="created-by">
                 <router-link v-bind:to="{name: 'userProfile', params: {username: $store.state.user.username}}">{{ user.username }}</router-link>
                 <img class="profile-pic" v-bind:src="user.profilePicture" />

@@ -1,6 +1,5 @@
 <template>
     <div>
-      <MainSearch />
       <p id="num-results">{{ numResults }}</p>
         <div class="recipe-list" v-for="recipe in results" v-bind:key="recipe.id">
           <RecipeCard :recipe="recipe"/>
@@ -11,11 +10,10 @@
   <script>
     import RecipeService from '../services/RecipeService';
     import RecipeCard from '../components/RecipeCard.vue';
-    import MainSearch from '../components/MainSearch.vue';
 
   export default {
     name: "searchResults",
-    components: { RecipeCard, MainSearch },
+    components: { RecipeCard },
     data() {
       return {
         ingredients: "",

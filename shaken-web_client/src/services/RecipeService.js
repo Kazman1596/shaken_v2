@@ -9,6 +9,10 @@ export default {
   searchIngredients(ingredientsArray) {
     const query = ingredientsArray.join(',')
     return axios.get(`/recipes/search?ingredients=${query}`)
+  },
+
+  getRecipeById(id) {
+    return axios.get(`/recipes/${id}`)
   }
 
 }

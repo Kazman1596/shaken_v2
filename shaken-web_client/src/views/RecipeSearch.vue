@@ -1,7 +1,7 @@
 <template>
   <div id="recipe-list">
     <p id="num-results">{{ numResults }}</p>
-      <div v-for="recipe in results" v-bind:key="recipe.id">
+      <div v-for="recipe in results" v-bind:key="recipe.recipeId">
           <RecipeCard :recipe="recipe"/>
       </div>
   </div>
