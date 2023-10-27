@@ -68,6 +68,8 @@
 
     #title {
         text-align: center;
+        border-bottom: 1px solid transparent;
+        margin-left: 100px;
     }
 
     #body {
@@ -98,16 +100,16 @@
     a{
         text-decoration: none;
         font-size: 14px;
-        cursor: pointer;
         border-bottom: 1px solid transparent;
     }
 
-    a:hover {
+    #title:hover {
         border-bottom: 1px solid #ffaa00;
         transition-duration: 250ms;
+        cursor: pointer;
     }
 
-    a:not(:hover) {
+    #title:not(:hover) {
         transition-duration: 250ms;
     }
 
