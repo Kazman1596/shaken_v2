@@ -7,6 +7,7 @@ import RecipeSearch from '../views/RecipeSearch.vue'
 import IngredientSearch from '../views/IngredientSearch.vue'
 import Recipe from '../views/Recipe.vue'
 import Profile from '../views/Profile.vue'
+import AddCocktail from '../views/AddCocktail.vue'
 import { store } from '../store'
 
 /**
@@ -72,6 +73,14 @@ const router = createRouter({
       path: "/recipe/:recipeId",
       name: "recipe",
       component: Recipe
+    },
+    {
+      path: "/add",
+      name: "addCocktail",
+      component: AddCocktail,
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 })

@@ -1,7 +1,7 @@
 <template>
     <div id="add-button">
     <PlusCircleIcon class="btn add" @mouseover="hover = true" @mouseleave="hover = false" v-if="!hover" />
-    <PlusSolid class="btn add-hover" @mouseover="hover = true" @mouseleave="hover = false" v-if="hover" />
+    <PlusSolid class="btn add-hover" @mouseover="hover = true" @mouseleave="hover = false" v-if="hover" v-on:click="add()" />
     </div>
   </template>
   
@@ -17,7 +17,13 @@
       }
     },
     methods: {
-      
+      add() {
+        const route = {
+          name: 'addCocktail',
+        }
+  
+        this.$router.push(route)
+      }
     }
   };
   </script>
