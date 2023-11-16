@@ -83,14 +83,38 @@ public class JdbcIngredientDao implements IngredientDao {
     }
 
     @Override
+    public Ingredient findIngredient(Ingredient ingredient) {
+        Ingredient result = null;
+        String sql = INGREDIENT_SELECT_STRING + "WHERE quantity = ? AND unit = ? AND name = ?;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, ingredient.getQuantity(), ingredient.getMeasurement(), ingredient.getName());
+            if (results.next()) {
+                result = mapRowToIngredient(results);
+            }
+        } catch (CannotGetJdbcConnectionException ex) {
+            throw new DaoException("Unable to connect to server or database", ex);
+        } catch (DataIntegrityViolationException ex) {
+            throw new DaoException("Data Integrity Violation", ex);
+        }
+
+        return result;
+    }
+    //TODO: Test createIngredient, findIngredient, mapIngredientToRecipe
+    @Override
     public Ingredient createIngredient(Ingredient newIngredient, int recipeId) {
         Ingredient ingredient = null;
         String sql = "INSERT INTO ingredient(quantity, unit, name) " +
                 "VALUES (?, ?, ?) RETURNING ingredient_id;";
         try {
-            int newId = jdbcTemplate.queryForObject(sql, int.class, newIngredient.getQuantity(), newIngredient.getMeasurement(), newIngredient.getName());
-            ingredient = getIngredientById(newId);
-            IngredientRecipeDto ingredientRecipeDto = new IngredientRecipeDto(recipeId, newId);
+            Ingredient searchedIngredient = findIngredient(newIngredient);
+            IngredientRecipeDto ingredientRecipeDto = null;
+            if (searchedIngredient == null) {
+                int newId = jdbcTemplate.queryForObject(sql, int.class, newIngredient.getQuantity(), newIngredient.getMeasurement(), newIngredient.getName());
+                ingredient = getIngredientById(newId);
+                ingredientRecipeDto = new IngredientRecipeDto(recipeId, newId);
+            } else {
+                ingredientRecipeDto = new IngredientRecipeDto(recipeId, searchedIngredient.getIngredientId());
+            }
             mapIngredientToRecipe(ingredientRecipeDto);
         } catch (CannotGetJdbcConnectionException ex) {
             throw new DaoException("Unable to connect to the server or database", ex);
