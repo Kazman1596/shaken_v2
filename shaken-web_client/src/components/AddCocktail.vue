@@ -2,9 +2,15 @@
     <div>
         <h2>Create Recipe</h2>
         <input v-model="newRecipe.title" type="text" id="title" placeholder="Title" />
+        <div id="added-ingredients" v-for="ingredient in newIngredients" v-bind:id="ingredient.name">
+            <p>{{ ingredient.quantity }}</p>
+            <p>{{ ingredient.unit }}</p>
+            <p>{{ ingredient.name }}</p>
+            <button v-on:click="removeIngredient(ingredient)">Remove</button>
+        </div>
         <div id="ingredient">
-            <input v-model="newIngredient.quantity" type="number" id="quantity" placeholder="Quantity" />
-            <select v-model="newIngredient.unit" id="unit">
+            <input v-model="ingredientQuantity" type="number" id="quantity" placeholder="Quantity" />
+            <select v-model="ingredientUnit" id="unit">
                 <option>N/A</option>
                 <option value="ounce">ounce</option>
                 <option value="drop">drop</option>
@@ -15,8 +21,8 @@
                 <option value="scoop">scoop</option>
                 <option value="dash">dash</option>
             </select>
-            <input v-model="newIngredient.name" type="text" id="name" placeholder="Name" />
-            <button v-on="addIngredient()">Add Ingredient</button>
+            <input v-model="ingredientName" type="text" id="name" placeholder="Name" />
+            <button v-on:click="addIngredient()">Add Ingredient</button>
         </div>
         <textarea v-model="newRecipe.instructions" type="text" id="instructions" placeholder="Instructions" />
         <select v-model="newRecipe.glass" id="glass" placeholder="Glassware">
@@ -41,34 +47,55 @@
   </template>
   
   <script>
+    import recipeService from "../services/RecipeService"
+    import ingredientService from "../services/IngredientService"
+
   export default {
     name: "add-cocktail",
     components: {},
     data() {
       return{
-        newIngredient: {
-            quantity: 0,
-            unit: "",
-            name: ""
-        },
+        ingredientQuantity: 0,
+        ingredientUnit: "",
+        ingredientName: "",
         newRecipe: {
             title: "",
-            ingredients: [],
             instructions: "",
             glass: "",
-            accountId: ""
-        }
+            accountId: this.$store.state.user.id,
+        },
+        newIngredients: [],
       }
     },
     methods: {
         createRecipe() {
             // Create a new recipe
+            recipeService.createRecipe(this.newRecipe).then((response) => {
+                console.log(response.data)
+                // Create or map new ingredients
+                this.newIngredients.forEach((ingredient => {
+                    ingredientService.createIngredient(ingredient, response.data.recipeId)
+                }))
+            })
+
             // Send to API
             // Send user home
         },
         addIngredient() {
-            // Create a new ingredient
-            // Add it to newRecipe.ingredients array
+            const newIngredient = {
+                quantity: this.ingredientQuantity,
+                unit: this.ingredientUnit,
+                name: this.ingredientName,
+            }
+            this.newIngredients.push(newIngredient);
+            this.ingredientQuantity = 0;
+            this.ingredientUnit = "";
+            this.ingredientName = "";
+        },
+        removeIngredient(ingredient) {
+            const i = this.newIngredients.indexOf(ingredient)
+
+            this.newIngredients.splice(i, 1)
         }
     }
   };

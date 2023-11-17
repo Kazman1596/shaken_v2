@@ -87,7 +87,7 @@ public class JdbcIngredientDao implements IngredientDao {
         Ingredient result = null;
         String sql = INGREDIENT_SELECT_STRING + "WHERE quantity = ? AND unit = ? AND name = ?;";
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, ingredient.getQuantity(), ingredient.getMeasurement(), ingredient.getName());
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, ingredient.getQuantity(), ingredient.getUnit(), ingredient.getName());
             if (results.next()) {
                 result = mapRowToIngredient(results);
             }
@@ -109,7 +109,7 @@ public class JdbcIngredientDao implements IngredientDao {
             Ingredient searchedIngredient = findIngredient(newIngredient);
             IngredientRecipeDto ingredientRecipeDto = null;
             if (searchedIngredient == null) {
-                int newId = jdbcTemplate.queryForObject(sql, int.class, newIngredient.getQuantity(), newIngredient.getMeasurement(), newIngredient.getName());
+                int newId = jdbcTemplate.queryForObject(sql, int.class, newIngredient.getQuantity(), newIngredient.getUnit(), newIngredient.getName());
                 ingredient = getIngredientById(newId);
                 ingredientRecipeDto = new IngredientRecipeDto(recipeId, newId);
             } else {
@@ -129,7 +129,7 @@ public class JdbcIngredientDao implements IngredientDao {
         Ingredient ingredient = null;
         String sql = "UPDATE ingredient SET quantity=?, unit=?, name=? WHERE ingredient_id = ?;";
         try {
-            int rowCount = jdbcTemplate.update(sql, updatedIngredient.getQuantity(), updatedIngredient.getMeasurement(), updatedIngredient.getName(), updatedIngredient.getIngredientId());
+            int rowCount = jdbcTemplate.update(sql, updatedIngredient.getQuantity(), updatedIngredient.getUnit(), updatedIngredient.getName(), updatedIngredient.getIngredientId());
             if (rowCount == 0) {
                 throw new DaoException("Expected 1 updated ingredient, but found 0");
             } else {
@@ -177,7 +177,7 @@ public class JdbcIngredientDao implements IngredientDao {
         Ingredient ingredient = new Ingredient();
         ingredient.setIngredientId(results.getInt("ingredient_id"));
         ingredient.setQuantity(results.getString("quantity"));
-        ingredient.setMeasurement(results.getString("unit"));
+        ingredient.setUnit(results.getString("unit"));
         ingredient.setName(results.getString("name"));
 
         return ingredient;

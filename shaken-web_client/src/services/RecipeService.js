@@ -13,6 +13,10 @@ export default {
 
   getRecipeById(id) {
     return axios.get(`/recipes/${id}`)
+  },
+
+  createRecipe(recipe) {
+    return axios.post('/recipes', recipe)
   }
 
 }

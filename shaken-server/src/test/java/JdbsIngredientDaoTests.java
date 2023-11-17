@@ -70,7 +70,7 @@ public class JdbsIngredientDaoTests extends BaseDaoTests {
     @Test
     public void updatedIngredient_returns_correct_results() {
         Ingredient ingredientToUpdate = sut.getIngredientById(10);
-        ingredientToUpdate.setMeasurement("spoonfuls");
+        ingredientToUpdate.setUnit("spoonfuls");
         ingredientToUpdate.setQuantity("18");
         ingredientToUpdate.setName("tomato bisque");
         sut.updateIngredient(ingredientToUpdate);
@@ -96,7 +96,7 @@ public class JdbsIngredientDaoTests extends BaseDaoTests {
     private void assertIngredientsMatch(Ingredient expected, Ingredient result) {
         Assert.assertEquals(expected.getIngredientId(), result.getIngredientId());
         Assert.assertEquals(expected.getQuantity(), result.getQuantity());
-        Assert.assertEquals(expected.getMeasurement(), result.getMeasurement());
+        Assert.assertEquals(expected.getUnit(), result.getUnit());
         Assert.assertEquals(expected.getName(), result.getName());
     }
 

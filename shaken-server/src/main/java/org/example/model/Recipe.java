@@ -31,7 +31,10 @@ public class Recipe {
         this.postTime = LocalTime.now();
     }
 
-    public Recipe() {};
+    public Recipe() {
+        this.postDate = LocalDate.now();
+        this.postTime = LocalTime.now();
+    };
 
     public Recipe(String title, String ingredients, String instructions, String glass, int rating, int accountId) {
         this.title = title;

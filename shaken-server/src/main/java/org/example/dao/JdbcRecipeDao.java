@@ -96,10 +96,10 @@ public class JdbcRecipeDao implements RecipeDao{
     @Override
     public Recipe createRecipe(Recipe newRecipe) {
         Recipe recipe = null;
-        String sql = "INSERT INTO recipe(title, ingredients, instructions, glass, account_id, rating, post_date, post_time) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING recipe_id;";
+        String sql = "INSERT INTO recipe(title, instructions, glass, account_id, rating, post_date, post_time) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING recipe_id;";
         try {
-            int newId = jdbcTemplate.queryForObject(sql, int.class, newRecipe.getTitle(), newRecipe.getIngredients(),
+            int newId = jdbcTemplate.queryForObject(sql, int.class, newRecipe.getTitle(),
                     newRecipe.getInstructions(), newRecipe.getGlass(), newRecipe.getAccountId(), newRecipe.getRating(),
                     newRecipe.getPostDate(), newRecipe.getPostTime());
             recipe = getRecipeById(newId);
@@ -250,7 +250,7 @@ public class JdbcRecipeDao implements RecipeDao{
         Recipe recipe = new Recipe();
         recipe.setRecipeId(results.getInt("recipe_id"));
         recipe.setTitle(results.getString("title"));
-        recipe.setIngredients(results.getString("ingredients"));
+//        recipe.setIngredients(results.getString("ingredients"));
         recipe.setInstructions(results.getString("instructions"));
         recipe.setGlass(results.getString("glass"));
         recipe.setAccountId(results.getInt("account_id"));

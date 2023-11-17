@@ -3,22 +3,22 @@ package org.example.model;
 public class Ingredient {
     private int ingredientId;
     private String quantity;
-    private String measurement;
+    private String unit;
     private String name;
 
     public Ingredient() {};
 
-    public Ingredient(String quantity, String measurement, String name) {
+    public Ingredient(String quantity, String unit, String name) {
         this.quantity = quantity;
-        this.measurement = measurement;
+        this.unit = unit;
         this.name = name;
     }
 
     //For testing
-    public Ingredient(int ingredientId, String quantity, String measurement, String name) {
+    public Ingredient(int ingredientId, String quantity, String unit, String name) {
         this.ingredientId = ingredientId;
         this.quantity = quantity;
-        this.measurement = measurement;
+        this.unit = unit;
         this.name = name;
     }
 
@@ -38,12 +38,12 @@ public class Ingredient {
         this.quantity = quantity;
     }
 
-    public String getMeasurement() {
-        return measurement;
+    public String getUnit() {
+        return unit;
     }
 
-    public void setMeasurement(String measurement) {
-        this.measurement = measurement;
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public String getName() {
