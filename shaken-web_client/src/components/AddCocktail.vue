@@ -1,16 +1,19 @@
 <template>
-    <div>
+    <div id="create-form">
         <h2>Create Recipe</h2>
-        <input v-model="newRecipe.title" type="text" id="title" placeholder="Title" />
-        <div id="added-ingredients" v-for="ingredient in newIngredients" v-bind:id="ingredient.name">
-            <p>{{ ingredient.quantity }}</p>
-            <p>{{ ingredient.unit }}</p>
-            <p>{{ ingredient.name }}</p>
-            <button v-on:click="removeIngredient(ingredient)">Remove</button>
+        <input required v-model="newRecipe.title" type="text" id="title" placeholder="Title" />
+        <div id="ingredient-list">
+            <div id="added-ingredients" v-for="ingredient in newIngredients" v-bind:id="ingredient.name">
+                <p>{{ ingredient.quantity }}</p>
+                <p>{{ ingredient.unit }}</p>
+                <p>{{ ingredient.name }}</p>
+                <button v-on:click="removeIngredient(ingredient)">Remove</button>
+            </div>
         </div>
         <div id="ingredient">
-            <input v-model="ingredientQuantity" type="number" id="quantity" placeholder="Quantity" />
+            <input required v-model="ingredientQuantity" type="number" id="quantity" placeholder="Quantity" />
             <select v-model="ingredientUnit" id="unit">
+                <option disabled selected>Unit of Measurment</option>
                 <option>N/A</option>
                 <option value="ounce">ounce</option>
                 <option value="drop">drop</option>
@@ -21,11 +24,12 @@
                 <option value="scoop">scoop</option>
                 <option value="dash">dash</option>
             </select>
-            <input v-model="ingredientName" type="text" id="name" placeholder="Name" />
+            <input required v-model="ingredientName" type="text" id="name" placeholder="Ingredient" />
             <button v-on:click="addIngredient()">Add Ingredient</button>
         </div>
-        <textarea v-model="newRecipe.instructions" type="text" id="instructions" placeholder="Instructions" />
-        <select v-model="newRecipe.glass" id="glass" placeholder="Glassware">
+        <textarea required v-model="newRecipe.instructions" type="text" id="instructions" placeholder="Instructions" />
+        <select required v-model="newRecipe.glass" id="glass" placeholder="Glassware">
+            <option disabled selected>Glassware</option>
             <option value="Old-Fashioned Glass">Old-Fashioned Glass</option>
             <option value="Cocktail Glass">Cocktail Glass</option>
             <option value="Shot Glass">Shot Glass</option>
@@ -44,7 +48,7 @@
         </select>
         <button v-on:click="createRecipe()">Create Recipe</button>
     </div>
-  </template>
+</template>
   
   <script>
     import recipeService from "../services/RecipeService"
@@ -78,14 +82,17 @@
                 }))
             })
 
-            // Send to API
-            // Send user home
+            const route = {
+                name: "home"
+            }
+
+            this.$router.push(route);
         },
         addIngredient() {
             const newIngredient = {
                 quantity: this.ingredientQuantity,
                 unit: this.ingredientUnit,
-                name: this.ingredientName,
+                name: this.ingredientName.toLowerCase(),
             }
             this.newIngredients.push(newIngredient);
             this.ingredientQuantity = 0;
@@ -102,6 +109,63 @@
   </script>
   
   
-  <style scoped>
+<style scoped>
 
-  </style>
+    #create-form {
+    text-align: center;
+    border: 1px solid #00eeff;
+    border-radius: 15px;
+    margin: 100px 25%;
+    }
+
+    #ingredient-list {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    #ingredient {
+        display: flex;
+        justify-content: center;
+
+    }
+    .form-input-group {
+    margin-bottom: 1rem;
+    }
+
+    label {
+    margin-right: 0.5rem;
+    }
+
+    button {
+    border: solid 1px #ffaa00;
+    border-radius: 10px;
+    padding: 6px;
+    cursor: pointer;
+    }
+
+    button:hover {
+    border: solid 1px #00eeff;
+    color: #00eeff;
+    transition-duration: 250ms;
+    }
+
+    button:not(:hover) {
+    transition-duration: 250ms;
+    }
+
+    input {
+    padding-right: 20%;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 10px;
+    font-size: 14px;
+    border: solid 1px #ffffff;
+    border-radius: 8px;
+    margin: 10px;
+    }
+
+    ::placeholder {
+    color: #d3d3d3;
+    }
+
+</style>
