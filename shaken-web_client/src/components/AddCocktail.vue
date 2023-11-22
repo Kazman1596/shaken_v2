@@ -1,7 +1,7 @@
 <template>
     <div id="create-form">
         <h2>Create Recipe</h2>
-        <input required v-model="newRecipe.title" type="text" id="title" placeholder="Title" />
+        <input required v-model="newRecipe.title" type="text" class="input-section" id="title" placeholder="Title" />
         <div id="ingredient-list">
             <div id="added-ingredients" v-for="ingredient in newIngredients" v-bind:id="ingredient.name">
                 <p>{{ ingredient.quantity }}</p>
@@ -10,24 +10,26 @@
                 <button v-on:click="removeIngredient(ingredient)">Remove</button>
             </div>
         </div>
-        <div id="ingredient">
+        <div id="ingredient" class="input-section">
             <input required v-model="ingredientQuantity" type="number" id="quantity" placeholder="Quantity" />
-            <select v-model="ingredientUnit" id="unit">
-                <option disabled selected>Unit of Measurment</option>
-                <option>N/A</option>
-                <option value="ounce">ounce</option>
-                <option value="drop">drop</option>
-                <option value="pinch">pinch</option>
-                <option value="tablespoon">tablespoon</option>
-                <option value="teaspoon">teaspoon</option>
-                <option value="cup">cup</option>
-                <option value="scoop">scoop</option>
-                <option value="dash">dash</option>
-            </select>
-            <input required v-model="ingredientName" type="text" id="name" placeholder="Ingredient" />
+            <div>
+                <select v-model="ingredientUnit" id="unit">
+                    <option disabled selected>Measurment</option>
+                    <option>N/A</option>
+                    <option value="ounce">ounce</option>
+                    <option value="drop">drop</option>
+                    <option value="pinch">pinch</option>
+                    <option value="tablespoon">tablespoon</option>
+                    <option value="teaspoon">teaspoon</option>
+                    <option value="cup">cup</option>
+                    <option value="scoop">scoop</option>
+                    <option value="dash">dash</option>
+                </select>
+            </div>
+            <input required v-model="ingredientName" type="text" id="name" class="input-section" placeholder="Ingredient" />
             <button v-on:click="addIngredient()">Add Ingredient</button>
         </div>
-        <textarea required v-model="newRecipe.instructions" type="text" id="instructions" placeholder="Instructions" />
+        <textarea required v-model="newRecipe.instructions" type="text" id="instructions" class="input-section" placeholder="Instructions" />
         <select required v-model="newRecipe.glass" id="glass" placeholder="Glassware">
             <option disabled selected>Glassware</option>
             <option value="Old-Fashioned Glass">Old-Fashioned Glass</option>
@@ -46,7 +48,9 @@
             <option value="Highball Glass">Highball Glass</option>
             <option value="Champagne Flute">Champagne Flute</option>
         </select>
-        <button v-on:click="createRecipe()">Create Recipe</button>
+        <div>
+            <button v-on:click="createRecipe()">Create Recipe</button>
+        </div>
     </div>
 </template>
   
@@ -126,6 +130,7 @@
     #ingredient {
         display: flex;
         justify-content: center;
+        align-items: center;
 
     }
     .form-input-group {
