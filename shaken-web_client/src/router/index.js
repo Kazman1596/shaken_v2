@@ -9,6 +9,9 @@ import Recipe from '../views/Recipe.vue'
 import Profile from '../views/Profile.vue'
 import AddCocktail from '../views/AddCocktail.vue'
 import { store } from '../store'
+import MainSearch from '../components/MainSearch.vue'
+import MyCocktails from '../components/MyCocktails.vue'
+import Favorites from '../components/Favorites.vue'
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -28,6 +31,30 @@ const router = createRouter({
       component: Home,
       meta: {
         requiresAuth: false
+      }
+    },
+    {
+      path:'/search',
+      name: 'search',
+      component: MainSearch,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: '/mycocktails',
+      name: 'myCocktails',
+      component: MyCocktails,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/favorites',
+      name: 'favorites',
+      component: Favorites,
+      meta: {
+        requiresAuth: true
       }
     },
     {

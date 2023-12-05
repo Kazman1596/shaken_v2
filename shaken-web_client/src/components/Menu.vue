@@ -16,9 +16,15 @@
       </nav>
     </div>
     <div id="nav-buttons">
-      <p>Search</p>
-      <p>My Cocktails</p>
-      <p>Favorites</p>
+      <div>
+        <router-link v-bind:to="{name: 'search'}"><p class="button">Search</p></router-link>
+      </div>
+      <div>
+        <router-link v-bind:to="{name: 'myCocktails'}"><p class="button">My Cocktails</p></router-link>
+      </div>
+      <div>
+        <router-link v-bind:to="{name: 'favorites'}"><p class="button">Favorites</p></router-link>
+      </div>
       <AddCocktailBtn />
     </div>
   </div>
@@ -37,7 +43,7 @@ export default {
   methods: {
     home() {
       const route = {
-          name: 'home',
+          name: 'search',
         }
   
         this.$router.push(route)
@@ -50,12 +56,32 @@ export default {
 <style>
 
 #menu {
-  border-bottom: 1px solid #a5a5a5
+  border-bottom: 1px solid #a5a5a5;
+  margin: 15px;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
+}
+
+.button {
+  cursor: pointer;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+}
+
+.button:hover {
+  border-bottom: 1px solid #00eeff;
+  transition-duration: 200ms;
+}
+
+.button:not(:hover) {
+  transition-duration: 200ms;
+}
+
+a{
+  text-decoration: none;
 }
 
 #logo {
