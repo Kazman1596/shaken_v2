@@ -17,13 +17,13 @@
     </div>
     <div id="nav-buttons">
       <div>
-        <router-link v-bind:to="{name: 'search'}"><p class="button">Search</p></router-link>
+        <router-link v-bind:to="{name: 'search'}"><p :class="isActiveSearch ? 'button active-tab' : 'button'">Search</p></router-link>
       </div>
       <div>
-        <router-link v-bind:to="{name: 'myCocktails'}"><p class="button">My Cocktails</p></router-link>
+        <router-link v-bind:to="{name: 'myCocktails'}"><p :class="isActiveMyCocktails ? 'button active-tab' : 'button'">My Cocktails</p></router-link>
       </div>
       <div>
-        <router-link v-bind:to="{name: 'favorites'}"><p class="button">Favorites</p></router-link>
+        <router-link v-bind:to="{name: 'favorites'}"><p :class="isActiveFavorites ? 'button active-tab' : 'button'">Favorites</p></router-link>
       </div>
       <AddCocktailBtn />
     </div>
@@ -37,7 +37,10 @@ export default {
   components: {AddCocktailBtn},
   data() {
     return{
-      hover: false
+      hover: false,
+      isActiveSearch: true,
+      isActiveMyCocktails: false,
+      isActiveFavorites: false
     }
   },
   methods: {
@@ -47,6 +50,16 @@ export default {
         }
   
         this.$router.push(route)
+    },
+    setActiveTab() {
+      this.isActiveSearch = this.$route.name === 'search';
+      this.isActiveMyCocktails = this.$route.name === 'myCocktails';
+      this.isActiveFavorites = this.$route.name === 'favorites';
+    }
+  },
+  watch: {
+    $route() {
+      this.setActiveTab();
     }
   }
 };
@@ -78,6 +91,10 @@ export default {
 
 .button:not(:hover) {
   transition-duration: 200ms;
+}
+
+.active-tab {
+  border-bottom: 1px solid #00eeff;
 }
 
 a{
