@@ -1,10 +1,10 @@
 <script>
 import { RouterView } from 'vue-router';
-import Header from './components/Header.vue'
+import Menu from './components/Menu.vue'
 import MainSearch from './components/MainSearch.vue';
 export default {
   components: {
-    Header,
+    Menu,
     MainSearch
 }
 }
@@ -13,7 +13,7 @@ export default {
 </script>
 
 <template>
-  <Header />
+  <Menu />
   <MainSearch />
   
   <RouterView />

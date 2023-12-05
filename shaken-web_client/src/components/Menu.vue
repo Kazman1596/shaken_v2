@@ -1,26 +1,33 @@
 <template>
-  <div class="header">
-    <AddCocktailBtn />
-    <div id="logo">
-      <h1 v-on:click="home()">Shaken</h1>
-    </div>
-    <nav>
-      <router-link v-bind:to="{name: 'login'}" v-if="$store.state.token == ''">Login</router-link>
-      <div v-if="$store.state.token !=''">
-        <div id="profile-greeting">
-          <p>Hello, <b>{{ $store.state.user.firstName }}</b></p>
-          <router-link v-bind:to="{name: 'userProfile', params: {username: $store.state.user.username}}"><img v-bind:src="$store.state.user.profilePicture" /></router-link>
-        </div>
-        <router-link v-bind:to="{name: 'logout'}">Logout</router-link>
+  <div id="menu">
+    <div class="header">
+      <div id="logo">
+        <h1 v-on:click="home()">Shaken</h1>
       </div>
-    </nav>
+      <nav>
+        <router-link v-bind:to="{name: 'login'}" v-if="$store.state.token == ''">Login</router-link>
+        <div v-if="$store.state.token !=''">
+          <div id="profile-greeting">
+            <p>Hello, <b>{{ $store.state.user.firstName }}</b></p>
+            <router-link v-bind:to="{name: 'userProfile', params: {username: $store.state.user.username}}"><img v-bind:src="$store.state.user.profilePicture" /></router-link>
+          </div>
+          <router-link v-bind:to="{name: 'logout'}">Logout</router-link>
+        </div>
+      </nav>
+    </div>
+    <div id="nav-buttons">
+      <p>Search</p>
+      <p>My Cocktails</p>
+      <p>Favorites</p>
+      <AddCocktailBtn />
+    </div>
   </div>
 </template>
 
 <script>
 import AddCocktailBtn from '../components/AddCocktailBtn.vue'
 export default {
-  name: "header",
+  name: "menu",
   components: {AddCocktailBtn},
   data() {
     return{
@@ -41,6 +48,11 @@ export default {
 
 
 <style>
+
+#menu {
+  border-bottom: 1px solid #a5a5a5
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -67,6 +79,11 @@ export default {
 
 #logo h1:not(:hover) {
   transition-duration: 250ms;
+}
+
+#nav-buttons {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 nav {
