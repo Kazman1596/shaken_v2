@@ -41,7 +41,7 @@ public class RecipeController {
         }
     }
 
-    @RequestMapping(path="/user/{id}/collection", method = RequestMethod.GET)
+    @RequestMapping(path="/user/{id}", method = RequestMethod.GET)
     public List<Recipe> getRecipesByAccountId(@PathVariable int id) {
         List<Recipe> recipes = recipeDao.getRecipesByAccountId(id);
         if (recipes.size() == 0) {

@@ -15,6 +15,10 @@ export default {
     return axios.get(`/recipes/${id}`)
   },
 
+  getRecipesByAccount(accountId) {
+    return axios.get(`/recipes/user/${accountId}`)
+  },
+
   createRecipe(recipe) {
     return axios.post('/recipes', recipe)
   }
