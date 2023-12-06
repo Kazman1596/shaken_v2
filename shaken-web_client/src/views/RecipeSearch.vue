@@ -25,7 +25,6 @@ export default {
   },
   computed: {
     numResults() {
-      this.searchRecipe();
       return this.results.length + " results";
     }
   },

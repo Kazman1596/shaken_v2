@@ -47,7 +47,6 @@
         }))
 
         ingredientService.getIngredientsByRecipe(this.recipe.recipeId).then((response => {
-            console.log(response.data)
             this.ingredients = response.data
         }))
     }

@@ -25,7 +25,6 @@
     },
     computed: {
       numResults() {
-        this.searchIngredients();
         return this.results.length + " results";
       }
     },
