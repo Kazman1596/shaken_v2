@@ -1,7 +1,7 @@
 <template>
     <div id="ingredient">
         <p>{{ ingredient.quantity }}</p>
-        <p id="measurement">{{ ingredient.measurement }}</p>
+        <p id="unit">{{ ingredient.unit }}</p>
         <p>{{ ingredient.name }}</p>
     </div>
   </template>
@@ -28,7 +28,7 @@
         margin: 5px;
     }
 
-    #measurement {
+    #unit {
         font-size: 12px;
     }
   </style>

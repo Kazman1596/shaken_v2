@@ -4,17 +4,19 @@
         <input required v-model="newRecipe.title" type="text" class="input-section" id="title" placeholder="Title" />
         <div id="ingredient-list">
             <div id="added-ingredients" v-for="ingredient in newIngredients" v-bind:id="ingredient.name">
-                <p>{{ ingredient.quantity }}</p>
-                <p>{{ ingredient.unit }}</p>
-                <p>{{ ingredient.name }}</p>
+                <div id="ingredient-details">
+                    <p>{{ ingredient.quantity }}</p>
+                    <p id="unit">{{ ingredient.unit }}</p>
+                    <p>{{ ingredient.name }}</p>
+                </div>
                 <button v-on:click="removeIngredient(ingredient)">Remove</button>
             </div>
         </div>
         <div id="ingredient" class="input-section">
             <input required v-model="ingredientQuantity" type="number" id="quantity" placeholder="Quantity" />
             <div>
-                <select v-model="ingredientUnit" id="unit">
-                    <option disabled selected>Measurment</option>
+                <select v-model="ingredientUnit" id="measurement">
+                    <option selected disabled value>Measurement</option>
                     <option>N/A</option>
                     <option value="ounce">ounce</option>
                     <option value="drop">drop</option>
@@ -26,12 +28,12 @@
                     <option value="dash">dash</option>
                 </select>
             </div>
-            <input required v-model="ingredientName" type="text" id="name" class="input-section" placeholder="Ingredient" />
-            <button v-on:click="addIngredient()">Add Ingredient</button>
+            <input required v-model="ingredientName" type="text" class="input-section" placeholder="Ingredient" />
+            <button v-on:click="addIngredient()">Add</button>
         </div>
         <textarea required v-model="newRecipe.instructions" type="text" id="instructions" class="input-section" placeholder="Instructions" />
         <select required v-model="newRecipe.glass" id="glass" placeholder="Glassware">
-            <option disabled selected>Glassware</option>
+            <option disabled selected value>Glassware</option>
             <option value="Old-Fashioned Glass">Old-Fashioned Glass</option>
             <option value="Cocktail Glass">Cocktail Glass</option>
             <option value="Shot Glass">Shot Glass</option>
@@ -116,15 +118,40 @@
 <style scoped>
 
     #create-form {
-    text-align: center;
-    border: 1px solid #00eeff;
-    border-radius: 15px;
-    margin: 100px 25%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        border: 1px solid #00eeff;
+        border-radius: 15px;
+        margin: 100px 10%;
+        padding: 10px;
     }
 
     #ingredient-list {
         display: flex;
         justify-content: space-evenly;
+    }
+
+    #ingredient-details {
+        display: flex;
+        border: solid 1px #ffaa00;
+        align-items: center;
+        border-radius: 10px;
+        min-width: 100px;
+        padding: 1px;
+        animation: fadeIn 500ms;
+        margin: 5px;
+    }
+
+    #ingredient-details p {
+        margin: 3px;
+        padding: 2px;
+    }
+
+    @keyframes fadeIn {
+        0% {opacity: 0;}
+        100% {opacity: 1;}
     }
 
     #ingredient {
@@ -133,40 +160,59 @@
         align-items: center;
 
     }
+
     .form-input-group {
-    margin-bottom: 1rem;
+        margin-bottom: 1rem;
     }
-
+    
     label {
-    margin-right: 0.5rem;
+        margin-right: 0.5rem;
     }
-
+    
     button {
-    border: solid 1px #ffaa00;
-    border-radius: 10px;
-    padding: 6px;
-    cursor: pointer;
+        border: solid 1px #ffaa00;
+        border-radius: 10px;
+        padding: 6px;
+        margin: 5px;
+        cursor: pointer;
     }
-
+    
     button:hover {
-    border: solid 1px #00eeff;
-    color: #00eeff;
-    transition-duration: 250ms;
+        border: solid 1px #00eeff;
+        color: #00eeff;
+        transition-duration: 250ms;
     }
-
+    
     button:not(:hover) {
-    transition-duration: 250ms;
+        transition-duration: 250ms;
+    }
+    
+    input {
+        padding-right: 10%;
+        padding-top: 7px;
+        padding-bottom: 7px;
+        padding-left: 10px;
+        font-size: 14px;
+        border: solid 1px #ffffff;
+        border-radius: 8px;
+        margin: 10px;
     }
 
-    input {
-    padding-right: 20%;
-    padding-top: 7px;
-    padding-bottom: 7px;
-    padding-left: 10px;
-    font-size: 14px;
-    border: solid 1px #ffffff;
-    border-radius: 8px;
-    margin: 10px;
+    select {
+        border-radius: 5px;
+        margin: 10px 5px;
+    }
+
+    #quantity {
+        padding-right: 15px;
+    }
+
+    #instructions {
+        border: solid 1px #ffffff;
+    }
+
+    #unit {
+        font-size: 12px;
     }
 
     ::placeholder {

@@ -148,7 +148,7 @@
     border-radius: 10px;
     min-width: 100px;
     padding: 5px;
-    animation: fadeIn s;
+    animation: fadeIn 500ms;
   }
 
   @keyframes fadeIn {
