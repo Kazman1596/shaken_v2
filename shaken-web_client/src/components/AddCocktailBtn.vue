@@ -32,7 +32,7 @@
   <style scoped>
   
   #add-button {
-    width: 35px;
+    width: 30px;
   }
 
   .add {

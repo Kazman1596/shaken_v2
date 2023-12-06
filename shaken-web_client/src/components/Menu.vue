@@ -19,13 +19,13 @@
       <div>
         <router-link v-bind:to="{name: 'search'}"><p :class="isActiveSearch ? 'button active-tab' : 'button'">Search</p></router-link>
       </div>
-      <div>
+      <div v-if="$store.state.token != ''">
         <router-link v-bind:to="{name: 'myCocktails'}"><p :class="isActiveMyCocktails ? 'button active-tab' : 'button'">My Cocktails</p></router-link>
       </div>
-      <div>
+      <div v-if="$store.state.token != ''">
         <router-link v-bind:to="{name: 'favorites'}"><p :class="isActiveFavorites ? 'button active-tab' : 'button'">Favorites</p></router-link>
       </div>
-      <AddCocktailBtn />
+      <AddCocktailBtn v-if="$store.state.token != ''" />
     </div>
   </div>
 </template>
@@ -52,7 +52,7 @@ export default {
         this.$router.push(route)
     },
     setActiveTab() {
-      this.isActiveSearch = this.$route.name === 'search';
+      this.isActiveSearch = this.$route.name === 'search' || this.$route.name === 'home';
       this.isActiveMyCocktails = this.$route.name === 'myCocktails';
       this.isActiveFavorites = this.$route.name === 'favorites';
     }
@@ -76,6 +76,11 @@ export default {
 .header {
   display: flex;
   justify-content: space-between;
+  min-height: 150px;
+}
+
+#nav-buttons div {
+  margin-left: 75px;
 }
 
 .button {
@@ -126,7 +131,7 @@ a{
 
 #nav-buttons {
   display: flex;
-  justify-content: space-evenly;
+  align-items: center;
 }
 
 nav {

@@ -117,6 +117,8 @@
   
 <style scoped>
 
+/* A lot of this styling is coming from Profile component so we should circle back to that */
+
     #create-form {
         display: flex;
         flex-direction: column;
@@ -128,13 +130,16 @@
         padding: 10px;
     }
 
+    
     #ingredient-list {
         display: flex;
         justify-content: space-evenly;
+        min-height: 85px;
     }
-
+    
     #ingredient-details {
         display: flex;
+        justify-content: center;
         border: solid 1px #ffaa00;
         align-items: center;
         border-radius: 10px;
@@ -143,24 +148,24 @@
         animation: fadeIn 500ms;
         margin: 5px;
     }
-
+    
     #ingredient-details p {
         margin: 3px;
         padding: 2px;
     }
-
+    
     @keyframes fadeIn {
         0% {opacity: 0;}
         100% {opacity: 1;}
     }
-
+    
     #ingredient {
         display: flex;
         justify-content: center;
         align-items: center;
-
+        
     }
-
+    
     .form-input-group {
         margin-bottom: 1rem;
     }
@@ -197,12 +202,12 @@
         border-radius: 8px;
         margin: 10px;
     }
-
+    
     select {
         border-radius: 5px;
         margin: 10px 5px;
     }
-
+    
     #quantity {
         padding-right: 15px;
     }

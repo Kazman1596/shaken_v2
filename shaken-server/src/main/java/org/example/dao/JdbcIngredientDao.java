@@ -13,9 +13,6 @@ import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
-/*TODO:
-*  Add a checker to make sure ingredient doesn't already exist in the database*/
-
 @Component
 public class JdbcIngredientDao implements IngredientDao {
     private final String INGREDIENT_SELECT_STRING = "SELECT ingredient_id, quantity, unit, name FROM ingredient ";

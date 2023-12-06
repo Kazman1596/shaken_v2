@@ -1,5 +1,5 @@
 <template>
-  <!-- <MainSearch /> -->
+  <MainSearch />
 </template>
 
 <script>
