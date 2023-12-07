@@ -20,6 +20,10 @@
                 <p id="instructions">{{ recipe.instructions }}</p>
             </div>
         </div>
+        <div id="user-permissions">
+            <p class="button" id="edit-button">Edit</p>
+            <p class="button" id="delete-button">Delete</p>
+        </div>
     </div>
 </template>
 
@@ -109,6 +113,33 @@
     }
 
     #title:not(:hover) {
+        transition-duration: 250ms;
+    }
+
+    #user-permissions {
+        display: flex;
+        justify-content: right;
+    }
+
+    .button {
+        margin: 5px;
+        font-size: 12px;
+    }
+
+    .button:hover {
+        cursor: pointer;
+        transition-duration: 250ms;
+    }
+
+    #edit-button:hover {
+        color:#00eeff;
+    }
+
+    #delete-button:hover {
+        color:#ffaa00;
+    }
+
+    .button:not(:hover) {
         transition-duration: 250ms;
     }
 

@@ -82,9 +82,15 @@ public class JdbcIngredientDao implements IngredientDao {
     @Override
     public Ingredient findIngredient(Ingredient ingredient) {
         Ingredient result = null;
+        SqlRowSet results = null;
         String sql = INGREDIENT_SELECT_STRING + "WHERE quantity = ? AND unit = ? AND name = ?;";
+        String sqlNull = INGREDIENT_SELECT_STRING + "WHERE quantity = ? AND unit IS NULL AND name = ?;";
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, ingredient.getQuantity(), ingredient.getUnit(), ingredient.getName());
+            if (ingredient.getUnit() == null) {
+                results = jdbcTemplate.queryForRowSet(sqlNull, ingredient.getQuantity(), ingredient.getName());
+            } else {
+                results = jdbcTemplate.queryForRowSet(sql, ingredient.getQuantity(), ingredient.getUnit(), ingredient.getName());
+            }
             if (results.next()) {
                 result = mapRowToIngredient(results);
             }

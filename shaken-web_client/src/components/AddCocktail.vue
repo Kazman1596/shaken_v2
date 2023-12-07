@@ -13,11 +13,11 @@
             </div>
         </div>
         <div id="ingredient" class="input-section">
-            <input required v-model="ingredientQuantity" type="number" id="quantity" placeholder="Quantity" />
+            <input required v-model="ingredientQuantity" type="text" id="quantity" placeholder="Quantity" />
             <div>
                 <select v-model="ingredientUnit" id="measurement">
                     <option selected disabled value>Measurement</option>
-                    <option>N/A</option>
+                    <option value="">N/A</option>
                     <option value="ounce">ounce</option>
                     <option value="drop">drop</option>
                     <option value="pinch">pinch</option>
@@ -97,7 +97,7 @@
         addIngredient() {
             const newIngredient = {
                 quantity: this.ingredientQuantity,
-                unit: this.ingredientUnit,
+                unit: this.ingredientUnit === "" ? null : this.ingredientUnit,
                 name: this.ingredientName.toLowerCase(),
             }
             this.newIngredients.push(newIngredient);
