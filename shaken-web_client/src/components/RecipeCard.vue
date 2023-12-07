@@ -13,7 +13,7 @@
             <div id="info">
                 <!-- <p>{{ recipe.ingredients }}</p> -->
                 <div id="ingredients">
-                    <div v-for="ingredient in ingredients" v-bind:id="ingredient.id">
+                    <div class="ingredient" v-for="ingredient in ingredients" v-bind:id="ingredient.id">
                        <Ingredient :ingredient="ingredient"/>
                     </div>
                 </div>
@@ -21,8 +21,8 @@
             </div>
         </div>
         <div id="user-permissions">
-            <p class="button" id="edit-button">Edit</p>
-            <p class="button" id="delete-button">Delete</p>
+            <p v-on:click="editRecipe()" class="button" id="edit-button">Edit</p>
+            <p v-on:click="deleteRecipe()" class="button" id="delete-button">Delete</p>
         </div>
     </div>
 </template>
@@ -53,6 +53,15 @@
         ingredientService.getIngredientsByRecipe(this.recipe.recipeId).then((response => {
             this.ingredients = response.data
         }))
+    },
+    methods: {
+        editRecipe() {
+            console.log("edit recipe")
+        },
+
+        deleteRecipe() {
+            console.log("delete recipe")
+        }
     }
 };
 </script>
@@ -86,7 +95,21 @@
 
     #ingredients {
         display: flex;
-        justify-content: space-around;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: auto 100px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #616161;
+    }
+
+    .ingredient {
+        padding-right: 15px;
+        padding-left: 15px;
+        border-right: 1px solid #ffaa00;
+    }
+
+    .ingredient:last-child {
+        border: none;
     }
 
     #created-by {
@@ -124,6 +147,7 @@
     .button {
         margin: 5px;
         font-size: 12px;
+        border: none;
     }
 
     .button:hover {

@@ -20,8 +20,6 @@
     #ingredient {
         display: flex;
         align-items: baseline;
-        border: 1px solid #ffaa00;
-        border-radius: 10px;
     }
 
     #ingredient p {
