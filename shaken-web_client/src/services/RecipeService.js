@@ -21,6 +21,14 @@ export default {
 
   createRecipe(recipe) {
     return axios.post('/recipes', recipe)
-  }
+  },
 
+  //not finished yet, will not work
+  editRecipe(id) {
+    return axios.put(`/recipes/${id}`)
+  },
+
+  deleteRecipe(id) {
+    return axios.delete(`recipes/${id}`)
+  }
 }

@@ -12,6 +12,7 @@ import { store } from '../store'
 import MainSearch from '../components/MainSearch.vue'
 import MyCocktails from '../components/MyCocktails.vue'
 import Favorites from '../components/Favorites.vue'
+import EditCocktail from '../views/EditCocktail.vue'
 
 
 const router = createRouter({
@@ -97,6 +98,14 @@ const router = createRouter({
       path: "/add",
       name: "addCocktail",
       component: AddCocktail,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/edit/:recipeId",
+      name: "editCocktail",
+      component: EditCocktail,
       meta: {
         requiresAuth: true
       }

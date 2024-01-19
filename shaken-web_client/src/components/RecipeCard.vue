@@ -56,7 +56,11 @@
     },
     methods: {
         editRecipe() {
-            console.log("edit recipe")
+            const route = {
+                name: "editCocktail",
+                params: {recipeId: this.recipe.recipeId}
+            }
+            this.$router.push(route)
         },
 
         deleteRecipe() {
