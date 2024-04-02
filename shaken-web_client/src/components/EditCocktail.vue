@@ -1,6 +1,6 @@
 <template>
     <div id="create-form">
-        <h2>Edit Recipe</h2>
+        <h2>{{ `Edit ${recipe.title}` }}</h2>
         <input required v-model="recipe.title" type="text" class="input-section" id="title" placeholder="Title" />
         <div id="ingredient-list">
             <div id="added-ingredients" v-for="ingredient in ingredients" v-bind:id="ingredient.name">

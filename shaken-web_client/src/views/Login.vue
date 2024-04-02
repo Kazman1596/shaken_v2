@@ -3,7 +3,7 @@
     <form @submit.prevent="login">
       <h1 >Please Sign In</h1>
       <div role="alert" v-if="invalidCredentials">
-        Invalid username and password!
+        Either the user name or password is invalid.
       </div>
       <div role="alert" v-if="this.$route.query.registration">
         Thank you for registering, please sign in.
@@ -54,7 +54,7 @@ export default {
         .catch(error => {
           const response = error.response;
 
-          if (response.status === 401) {
+          if (response.status === 401 || response.status === 403) {
             this.invalidCredentials = true;
           }
         });
