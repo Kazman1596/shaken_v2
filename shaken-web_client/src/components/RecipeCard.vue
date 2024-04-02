@@ -116,6 +116,10 @@
         border: none;
     }
 
+    #instructions {
+        text-align: center;
+    }
+
     #created-by {
         display: flex;
         align-items: center;

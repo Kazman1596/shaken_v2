@@ -106,15 +106,15 @@
                 unit: this.ingredientUnit === "" ? null : this.ingredientUnit,
                 name: this.ingredientName.toLowerCase(),
             }
-            this.newIngredients.push(newIngredient);
+            this.ingredients.push(newIngredient);
             this.ingredientQuantity = 0;
             this.ingredientUnit = "";
             this.ingredientName = "";
         },
         removeIngredient(ingredient) {
-            const i = this.newIngredients.indexOf(ingredient)
+            const i = this.ingredients.indexOf(ingredient)
 
-            this.newIngredients.splice(i, 1)
+            this.ingredients.splice(i, 1)
         }
     }
   };
