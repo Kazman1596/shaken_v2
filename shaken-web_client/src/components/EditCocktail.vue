@@ -87,7 +87,6 @@
             console.log(this.recipe)
             recipeService.editRecipe(this.recipe).then((response) => {
                 console.log(response.data)
-                // Create or map new ingredients and unmap old ingredients (we can just remove all ingredients and add all new ones)
                 this.ingredients.forEach((ingredient => {
                     ingredientService.createIngredient(ingredient, response.data.recipeId)
                 }))
@@ -113,7 +112,13 @@
         removeIngredient(ingredient) {
             const i = this.ingredients.indexOf(ingredient)
 
+            console.log(ingredient)
+
             this.ingredients.splice(i, 1)
+            
+            if (ingredient.ingredientId) {
+                ingredientService.removeIngredient(this.recipe.recipeId, ingredient.ingredientId)
+            }
         }
     }
   };

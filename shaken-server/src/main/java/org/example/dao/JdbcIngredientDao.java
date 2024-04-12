@@ -109,16 +109,19 @@ public class JdbcIngredientDao implements IngredientDao {
         String sql = "INSERT INTO ingredient(quantity, unit, name) " +
                 "VALUES (?, ?, ?) RETURNING ingredient_id;";
         try {
+            //Checks to see if ingredient from recipe already exists in database
             Ingredient searchedIngredient = findIngredient(newIngredient);
             IngredientRecipeDto ingredientRecipeDto = null;
+            //If ingredient does not exist, IngredientRecipeDto is created with new ingredient's ID
             if (searchedIngredient == null) {
                 int newId = jdbcTemplate.queryForObject(sql, int.class, newIngredient.getQuantity(), newIngredient.getUnit(), newIngredient.getName());
                 ingredient = getIngredientById(newId);
                 ingredientRecipeDto = new IngredientRecipeDto(recipeId, newId);
             } else {
+                //If ingredient does exist, IngredientRecipeDto is created with existing ingredient's ID
                 ingredientRecipeDto = new IngredientRecipeDto(recipeId, searchedIngredient.getIngredientId());
             }
-            //Finds the ingredient but tries to map ingredient to recipe twice
+            //Checks to make sure ingredient isn't already mapped to recipe, before trying to map it again
             if (!isIngredientMappedToRecipe(ingredientRecipeDto)) {
                 mapIngredientToRecipe(ingredientRecipeDto);
             }
