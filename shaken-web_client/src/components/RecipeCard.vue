@@ -30,6 +30,7 @@
 <script>
     import accountService from '../services/AccountService';
     import ingredientService from '../services/IngredientService';
+    import recipeService from '../services/RecipeService';
     import Ingredient from './Ingredient.vue';
 
     export default {
@@ -64,7 +65,16 @@
         },
 
         deleteRecipe() {
-            console.log("delete recipe")
+            var result = confirm(`Are you sure you want to delete ${this.recipe.title}?`)
+            if (result) {
+                recipeService.deleteRecipe(this.recipe.recipeId)
+
+                const route = {
+                    name: 'myCocktails'
+                }
+
+                this.$router.push(route)
+            }
         }
     }
 };
