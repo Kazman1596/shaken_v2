@@ -83,13 +83,12 @@
         })
     },
     methods: {
-        //not finished yet... will not work right now!
         updateRecipe() {
-            // Update recipe
+            console.log(this.recipe)
             recipeService.editRecipe(this.recipe).then((response) => {
                 console.log(response.data)
                 // Create or map new ingredients and unmap old ingredients (we can just remove all ingredients and add all new ones)
-                this.newIngredients.forEach((ingredient => {
+                this.ingredients.forEach((ingredient => {
                     ingredientService.createIngredient(ingredient, response.data.recipeId)
                 }))
             })

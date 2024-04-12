@@ -118,7 +118,10 @@ public class JdbcIngredientDao implements IngredientDao {
             } else {
                 ingredientRecipeDto = new IngredientRecipeDto(recipeId, searchedIngredient.getIngredientId());
             }
-            mapIngredientToRecipe(ingredientRecipeDto);
+            //Finds the ingredient but tries to map ingredient to recipe twice
+            if (!isIngredientMappedToRecipe(ingredientRecipeDto)) {
+                mapIngredientToRecipe(ingredientRecipeDto);
+            }
         } catch (CannotGetJdbcConnectionException ex) {
             throw new DaoException("Unable to connect to the server or database", ex);
         } catch (DataIntegrityViolationException ex) {
@@ -175,6 +178,21 @@ public class JdbcIngredientDao implements IngredientDao {
             throw new DaoException("Data Integrity Violation", ex);
         }
     }
+
+    @Override
+    public boolean isIngredientMappedToRecipe(IngredientRecipeDto ingredientRecipeDto) {
+        String sql = "SELECT recipe_id, ingredient_id FROM recipe_ingredient WHERE recipe_id = ? AND ingredient_id = ?;";
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, ingredientRecipeDto.getRecipeId(), ingredientRecipeDto.getIngredientId());
+            return results.next();
+        } catch (CannotGetJdbcConnectionException ex) {
+            throw new DaoException("Unable to connect to server or database", ex);
+        } catch (DataIntegrityViolationException ex) {
+            throw new DaoException("Data Integrity Violation", ex);
+        }
+
+    };
 
     private Ingredient mapRowToIngredient(SqlRowSet results) {
         Ingredient ingredient = new Ingredient();

@@ -24,8 +24,8 @@ export default {
   },
 
   //not finished yet, will not work
-  editRecipe(id) {
-    return axios.put(`/recipes/${id}`)
+  editRecipe(recipe) {
+    return axios.put(`/recipes/${recipe.recipeId}`, recipe)
   },
 
   deleteRecipe(id) {
