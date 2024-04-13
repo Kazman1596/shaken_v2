@@ -115,7 +115,7 @@ public class JdbcReviewDao implements ReviewDao{
     public Review createReview(Review newReview) {
         Review review = null;
         String sql = "INSERT INTO review(title, recipe_id, account_id, description, rating, post_date, post_time) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING recipe_id;";
+                "VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING review_id;";
         try {
             int newId = jdbcTemplate.queryForObject(sql, int.class, newReview.getTitle(), newReview.getRecipeId(), newReview.getUserId(),
                     newReview.getDescription(), newReview.getRating(), newReview.getPostDate(), newReview.getPostTime());

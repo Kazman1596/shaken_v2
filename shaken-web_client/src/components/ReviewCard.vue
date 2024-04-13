@@ -1,6 +1,6 @@
 <template>
     <div id="review-card">
-        <p>Review</p>
+        <p>This is a good review.</p>
         <p>kazman1596</p>
         <p>great idea!</p>
     </div>
@@ -9,24 +9,16 @@
   <script>
   
   export default {
-    name: "ingredient",
+    name: "review",
     props: {
-        ingredient: {}
+        review: {}
     }
   };
   </script>
   
   <style scoped>
-    #ingredient {
-        display: flex;
-        align-items: baseline;
-    }
-
-    #ingredient p {
-        margin: 5px;
-    }
-
-    #unit {
-        font-size: 12px;
+    #review-card {
+        border: 1px solid #00eeff;
+        border-radius: 10px;
     }
   </style>
