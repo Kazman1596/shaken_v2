@@ -5,16 +5,23 @@
             <Ingredient :ingredient="ingredient" />
         </div>
         <p>{{ recipe.instructions }}</p>
+        <div id="review-section">
+            <h2>Reviews</h2>
+            <div id="reviews">
+                <ReviewCard />
+            </div>
+        </div>
     </div>
   </template>
   
   <script>
     import ingredientService from '../services/IngredientService';
     import recipeService from '../services/RecipeService';
-    import Ingredient from '../components/Ingredient.vue'
+    import Ingredient from '../components/Ingredient.vue';
+    import ReviewCard from '../components/ReviewCard.vue';
     export default {
         name: "recipe-details",
-        components: {Ingredient},
+        components: {Ingredient, ReviewCard},
         props: {
             recipe: "recipe"
         },
