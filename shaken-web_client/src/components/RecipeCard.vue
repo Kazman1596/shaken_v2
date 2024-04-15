@@ -20,7 +20,7 @@
                 <p id="instructions">{{ recipe.instructions }}</p>
             </div>
         </div>
-        <div id="user-permissions" >
+        <div id="user-permissions" v-if="this.user.id == $store.state.user.id">
             <p v-on:click="editRecipe()" class="button" id="edit-button">Edit</p>
             <p v-on:click="deleteRecipe()" class="button" id="delete-button">Delete</p>
         </div>
