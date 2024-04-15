@@ -1,8 +1,11 @@
 <template>
     <div id="review-card">
-        <p>This is a good review.</p>
-        <p>kazman1596</p>
-        <p>great idea!</p>
+        <p>{{ review.title }}</p>
+        <p>{{ review.userId }}</p>
+        <p>{{ review.postDate }}</p>
+        <p>{{ review.postTime }}</p>
+        <p>{{ review.rating }} / 5</p>
+        <p>{{ review.description }}</p>
     </div>
   </template>
     

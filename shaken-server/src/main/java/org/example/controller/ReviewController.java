@@ -34,7 +34,7 @@ public class ReviewController {
         }
     }
 
-    @RequestMapping(path="/recipe/{id}", method = RequestMethod.GET)
+    @RequestMapping(path="/recipe/{recipeId}", method = RequestMethod.GET)
     public List<Review> getReviewsByRecipeId(@PathVariable int recipeId) {
         List<Review> reviews = reviewDao.getReviewsByRecipe(recipeId);
         if (reviews.size() == 0) {
