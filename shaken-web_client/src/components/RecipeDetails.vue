@@ -44,7 +44,6 @@
             })
 
             reviewService.getReviewsByRecipe(this.$route.params.recipeId).then((response) => {
-                console.log(response.data)
                 this.reviews = response.data
             })
         }
