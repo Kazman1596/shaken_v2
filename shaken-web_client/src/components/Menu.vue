@@ -1,5 +1,5 @@
 <template>
-  <div id="menu">
+  <div id="main-menu">
     <div class="header">
       <div id="logo">
         <h1 v-on:click="home()">Shaken</h1>
@@ -33,7 +33,7 @@
 <script>
 import AddCocktailBtn from '../components/AddCocktailBtn.vue'
 export default {
-  name: "menu",
+  name: "main-menu",
   components: {AddCocktailBtn},
   data() {
     return{
@@ -68,7 +68,7 @@ export default {
 
 <style>
 
-#menu {
+#main-menu {
   border-bottom: 1px solid #a5a5a5;
   margin: 15px;
 }

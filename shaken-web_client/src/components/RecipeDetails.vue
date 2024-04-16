@@ -24,9 +24,6 @@
     export default {
         name: "recipe-details",
         components: {Ingredient, ReviewCard},
-        props: {
-            recipe: "recipe"
-        },
         data() {
             return {
             ingredients: [],

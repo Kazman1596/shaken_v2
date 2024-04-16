@@ -2,8 +2,8 @@
     <div id="review-card">
       <div id="review-heading">
         <div class="section">
-          <img v-bind:src="this.user.profilePicture" />
-          <p>{{ this.user.username }}</p>
+          <img v-bind:src="user.profilePicture" />
+          <p>{{ user.username }}</p>
           <p>{{ review.rating }} / 5</p>
         </div>
         <div class="section">
