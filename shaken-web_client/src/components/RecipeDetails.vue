@@ -6,7 +6,17 @@
         </div>
         <p>{{ recipe.instructions }}</p>
         <div id="review-section">
-            <h2>Reviews</h2>
+            <div id="review-header">
+                <h2>Reviews</h2>
+                <button v-on:click="writeReview = !writeReview">Write a review</button>
+            </div>
+            <div v-if="writeReview" id="create-review">
+                <div id="review-form">
+                    <input class="input" type="text" placeholder="Title"/>
+                    <textarea class="input" placeholder="Say something..."/>
+                </div>
+                <button>Submit</button>
+            </div>
             <div v-for="review in reviews" v-bind:key="review.id" id="reviews">
                 <ReviewCard :review="review" />
             </div>
@@ -28,7 +38,8 @@
             return {
             ingredients: [],
             recipe: {},
-            reviews: []
+            reviews: [],
+            writeReview: false
             }
         },
         created() {
@@ -43,6 +54,32 @@
             reviewService.getReviewsByRecipe(this.$route.params.recipeId).then((response) => {
                 this.reviews = response.data
             })
+        },
+        methods: {
+            createReview() {
+                console.log("Writing a new review")
+            }
         }
     }
-  </script>
+</script>
+
+<style>
+
+    #create-review {
+        border: 1px solid #ffaa00;
+        border-radius: 15px;
+        margin: 15px 350px;
+        padding: 20px;
+    }
+
+    #review-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .input {
+        margin: 10px;
+    }
+
+
+</style>
