@@ -23,7 +23,7 @@
         <router-link v-bind:to="{name: 'myCocktails'}"><p :class="isActiveMyCocktails ? 'button active-tab' : 'button'">My Cocktails</p></router-link>
       </div>
       <div v-if="$store.state.token != ''">
-        <router-link v-bind:to="{name: 'favorites'}"><p :class="isActiveFavorites ? 'button active-tab' : 'button'">Favorites</p></router-link>
+        <!-- <router-link v-bind:to="{name: 'favorites'}"><p :class="isActiveFavorites ? 'button active-tab' : 'button'">Favorites</p></router-link> -->
       </div>
       <AddCocktailBtn v-if="$store.state.token != ''" />
     </div>
